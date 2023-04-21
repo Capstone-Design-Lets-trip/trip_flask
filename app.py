@@ -1,8 +1,10 @@
 import requests
 from att_recommend import *
 from flask import Flask, jsonify, request, render_template, redirect
-app = Flask(__name__)
+from flask_cors import CORS
 
+app = Flask(__name__)
+CORS(app)  # 모든 origin에 대해 CORS를 허용합니다.
 
 @app.route("/check")
 def check():
@@ -26,5 +28,16 @@ def post_echo_call():
 def test_model():
     return json.loads(att_recommend('한큐백화점')),200
 
+@app.route('/togo', methods=['POST'])
+def togo():
+    param = request.get_json()
+    print(param.get('inside_outside'))
+    print(param.get('mountain_ocean'))
+    print(param.get('properties'))
+    for i in param.get('properties'):
+        print(i)
+    return "Data received successfully"
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run(port=5000)
+
