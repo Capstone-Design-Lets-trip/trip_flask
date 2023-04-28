@@ -1,8 +1,10 @@
 import requests
 from att_recommend import *
 from choose_attraction import *
+from attraction_route_recommend import *
 from flask import Flask, jsonify, request, render_template, redirect
 from flask_cors import CORS
+import datetime
 import re
 
 
@@ -63,10 +65,14 @@ def togo():
 
     print(to_return)
     print(dup)
+    start_time = datetime.datetime.now()
+    end_time=datetime.datetime.now() + datetime.timedelta(days=3)
     result_1=att_recommend(input_keyword = str(dup))
     result_2=choose_attraction(result_1,'./total_Osaka.csv')
-    print(result_2)
-    return result_2, 200
+    result_3=attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv')
+    print(type(result_3))
+    response = requests.post("/calls/save", json=result_3)
+    return response, 200
 
 
 if __name__ == "__main__":
