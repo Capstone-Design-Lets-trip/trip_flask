@@ -71,10 +71,10 @@ def togo():
     result_2=choose_attraction(result_1,'./total_Osaka.csv')
     result_3=attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv')
     print(type(result_3))
-    response = requests.post("/calls/save", json=result_3)
+    response = requests.post("http://lestrip.shop:8080/course/save", json=result_3)
     return response, 200
 
 
 if __name__ == "__main__":
-    app.run(port=5000)
+    app.run(host="0.0.0.0",port=5000)
 
