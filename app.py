@@ -1,7 +1,10 @@
 import requests
 from att_recommend import *
+from choose_attraction import *
 from flask import Flask, jsonify, request, render_template, redirect
 from flask_cors import CORS
+import re
+
 
 app = Flask(__name__)
 CORS(app)  # 모든 origin에 대해 CORS를 허용합니다.
@@ -24,19 +27,47 @@ def post_echo_call():
 
     return jsonify(param), 200
 
-@app.route('/test_model',methods=['POST'])
+@app.route('/test_model',methods=['GET'])
 def test_model():
-    return json.loads(att_recommend('한큐백화점')),200
+    result_1=att_recommend('한큐백화점')
+    result_2=choose_attraction(result_1,'./total_Osaka.csv')
+    print(result_2)
+    return "BAD"
+    # return json.loads(),200
 
 @app.route('/togo', methods=['POST'])
 def togo():
+    to_return=[]
     param = request.get_json()
-    print(param.get('inside_outside'))
-    print(param.get('mountain_ocean'))
-    print(param.get('properties'))
-    for i in param.get('properties'):
-        print(i)
-    return "Data received successfully"
+    keys=list(param.keys())
+    for i in range(len(keys) - 1):
+        to_return.append(param.get(keys[i]))
+        print(param.get(keys[i]))
+
+    if len(param.get('properties')):
+        for i in param.get('properties'):
+            to_return.append(i)
+
+    dup = []
+    for token in to_return:
+        if ',' in token:
+            ch1 = token.split(',')
+            for i in range(len(ch1)):
+                dup.append(ch1[i].replace(' ', ''))
+
+        else:
+            dup.append(token)
+
+    for i in range(len(dup)):
+        dup[i] = dup[i].replace("'",'')
+
+    print(to_return)
+    print(dup)
+    result_1=att_recommend(input_keyword = str(dup))
+    result_2=choose_attraction(result_1,'./total_Osaka.csv')
+    print(result_2)
+    return result_2, 200
+
 
 if __name__ == "__main__":
     app.run(port=5000)
