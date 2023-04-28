@@ -318,7 +318,7 @@ def make_json_file(totalList, bfpath, input_time, graph):
   travel_schedule['arrive_times'] = arrive_times
   travel_schedule['depart_times'] = depart_times
   travel_schedule['move_times'] = move_times
-  travel_schedules_json=json.dump(travel_schedule, default=str, indent=4, ensure_ascii=False)
+  travel_schedules_json=json.dumps(travel_schedule, default=str, indent=4, ensure_ascii=False)
 
   return travel_schedules_json
 
