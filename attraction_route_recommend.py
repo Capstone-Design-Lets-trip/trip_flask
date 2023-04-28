@@ -310,17 +310,17 @@ def make_json_file(totalList, bfpath, input_time, graph):
       names.append(totalList[bfpath[x]].name)
     move_times.append(int(graph[bfpath[x-1]][bfpath[x]]))
     start_time = start_time + dt.timedelta(minutes = int(graph[bfpath[x-1]][bfpath[x]]))
-    arrive_times.append(start_time)
+    arrive_times.append((start_time.strftime("%Y-%m-%d %H:%M:%S:%f")))
     start_time = start_time + dt.timedelta(minutes = int(totalList[bfpath[x]].stayTime))
-    depart_times.append(start_time)
+    depart_times.append((start_time.strftime("%Y-%m-%d %H:%M:%S:%f")))
 
   travel_schedule['names'] = names
   travel_schedule['arrive_times'] = arrive_times
   travel_schedule['depart_times'] = depart_times
   travel_schedule['move_times'] = move_times
-  travel_schedules_json=json.dumps(travel_schedule, default=str, indent=4, ensure_ascii=False)
-
-  return travel_schedules_json
+  #travel_schedules_json=json.dumps(travel_schedule, default=str, indent=4, ensure_ascii=False)
+  return travel_schedule
+  #return travel_schedules_json
 
 class TouristAttraction:
     def __init__(self, name, address, stayTime):

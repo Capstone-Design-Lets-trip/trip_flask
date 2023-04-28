@@ -65,14 +65,19 @@ def togo():
 
     print(to_return)
     print(dup)
-    start_time = datetime.datetime.now()
+    start_time = datetime.datetime.now().replace(hour=10)
     end_time=datetime.datetime.now() + datetime.timedelta(days=3)
     result_1=att_recommend(input_keyword = str(dup))
     result_2=choose_attraction(result_1,'./total_Osaka.csv')
     result_3=attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv')
     print(type(result_3))
-    response = requests.post("http://letsrip.shop:8080/course/save", json=json.dumps(result_3))
-    return response, 200
+    print(type(json.loads(json.dumps(result_3))))
+    for i in result_3:
+        print(type(i))
+        print(i)
+    #print(json.loads(json.dumps(result_3)))
+    response = requests.post("http://letstrip.shop:8080/course/save", json=result_3)
+    return "Good", 200
 
 
 if __name__ == "__main__":
