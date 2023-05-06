@@ -52,7 +52,10 @@ def togo():
     param = request.get_json()
     keys=list(param.keys())
     for i in range(len(keys) - 1):
-        to_return.append(param.get(keys[i]))
+        if (keys[i]=='startDate' or keys[i]=='endDate'):
+            to_return.append(param.get(keys[i]).replace('T',' '))
+        else:
+            to_return.append(param.get(keys[i]))
         print(param.get(keys[i]))
 
     if len(param.get('properties')):
