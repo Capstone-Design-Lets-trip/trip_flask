@@ -37,6 +37,15 @@ def test_model():
     return "BAD"
     # return json.loads(),200
 
+@app.route('/test_togo',methods=['POST'])
+def test_togo():
+    param=request.get_json()
+    keys = list(param.keys())
+    for i in range(len(keys) - 1):
+        print(param.get(keys[i]))
+        print(type(param.get(keys[i])))
+    return 200;
+
 @app.route('/togo', methods=['POST'])
 def togo():
     to_return=[]
