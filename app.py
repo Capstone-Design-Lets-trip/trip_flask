@@ -41,8 +41,17 @@ def test_model():
 def test_togo():
     param=request.get_json()
     keys = list(param.keys())
+    format = '%Y-%m-%d %H:%M'
     for i in range(len(keys) - 1):
-        print(param.get(keys[i]))
+        if (keys[i]=='startDate' or keys[i]=='endDate'):
+            print('datetime이다아아아아앙')
+            a=param.get(keys[i]).replace('T',' ')
+            print(type(a))
+            print(datetime.datetime.strptime(a,format))
+            print(type(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format)))
+        else:
+            print(param.get(keys[i]))
+        # print(param.get(keys[i]))
         print(type(param.get(keys[i])))
     return 200;
 
@@ -51,12 +60,14 @@ def togo():
     to_return=[]
     param = request.get_json()
     keys=list(param.keys())
+    format = '%Y-%m-%d %H:%M'
     for i in range(len(keys) - 1):
         if (keys[i]=='startDate' or keys[i]=='endDate'):
-            to_return.append(param.get(keys[i]).replace('T',' '))
+            to_return.append(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format))
+            print(param.get(keys[i]).replace('T',' '))
         else:
             to_return.append(param.get(keys[i]))
-        print(param.get(keys[i]))
+            print(param.get(keys[i]))
 
     if len(param.get('properties')):
         for i in param.get('properties'):
@@ -77,11 +88,13 @@ def togo():
 
     print(to_return)
     print(dup)
-    start_time = datetime.datetime.now().replace(hour=10)
-    end_time=datetime.datetime.now() + datetime.timedelta(days=3)
+    # start_time = datetime.datetime.now().replace(hour=10)
+    # end_time=datetime.datetime.now() + datetime.timedelta(days=3)
+    start_time=datetime.datetime.strptime(param.get('startDate').replace('T',' '),format)
+    end_time=datetime.datetime.strptime(param.get('endDate').replace('T',' '),format)
     result_1=att_recommend(input_keyword = str(dup))
     result_2=choose_attraction(result_1,'./total_Osaka.csv')
-    result_3=attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv')
+    result_3=attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.get('travel_start'),param.get('travel_end'))
     print(type(result_3))
     print(type(json.loads(json.dumps(result_3))))
     for i in result_3:

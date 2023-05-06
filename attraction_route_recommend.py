@@ -386,7 +386,7 @@ class TouristAttraction:
 
 
 def attraction_route_recommend(input='', input_time='', finish_times='', Osaka_time_path='', User_df_path='',
-                               total_Osaka_path=''):
+                               total_Osaka_path='', go_out_time='', go_in_time=''):
     path_df = pd.read_csv(Osaka_time_path)
     path_df.columns = ['origins', 'destinations', 'cost']
     user_df = pd.read_csv(User_df_path)
@@ -430,7 +430,7 @@ def attraction_route_recommend(input='', input_time='', finish_times='', Osaka_t
     for day in range(1, total_travel_days):
         order = 0
         travel_time = 0
-        allocationTime = ((input_time.replace(hour=21, minute=0) - input_time) / 60).seconds
+        allocationTime = ((input_time.replace(hour=go_in_time[:2], minute=go_in_time[-2:]) - input_time) / 60).seconds
         move_time = 30
 
         for i in range(len(total_boxes)):
@@ -505,7 +505,7 @@ def attraction_route_recommend(input='', input_time='', finish_times='', Osaka_t
         lastpoint = totalList[bfPath[-1]].name
         first_day_visit = 0
         input_time += dt.timedelta(days=1)
-        input_time = input_time.replace(hour=9)
+        input_time = input_time.replace(hour=int(go_out_time[:2]), minute=int(go_out_time[-2:]))
         attrList = []
 
         travel_schedule = make_json_file(totalList, bfPath, input_time, graph)
