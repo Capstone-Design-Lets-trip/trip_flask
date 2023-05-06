@@ -75,6 +75,8 @@ def togo():
 
     dup = []
     for token in to_return:
+        if type(token) == 'datetime.datetime':
+            continue
         if ',' in token:
             ch1 = token.split(',')
             for i in range(len(ch1)):
