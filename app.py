@@ -103,8 +103,8 @@ def togo():
         print(type(i))
         print(i)
     #print(json.loads(json.dumps(result_3)))
-    response = requests.post("http://letstrip.shop:8080/course/save", json=result_3)
-    return "Good", 200
+    response = requests.post("http://letstrip.shop:8080/tour/course", json=result_3)
+    return response, 200
 
 
 if __name__ == "__main__":
