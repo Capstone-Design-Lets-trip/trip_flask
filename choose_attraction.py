@@ -10,7 +10,7 @@ Original file is located at
 import numpy as np
 import pandas as pd
 
-def choose_attraction(input, path):
+def choose_attraction(input = '', path = ''):
   df = pd.read_csv(path)
   end = len(df.cluster.unique())
   att_index = []
@@ -46,12 +46,10 @@ def choose_attraction(input, path):
 
   sorted_total_clustering_box = sorted(total_clustering_box.items(), key=lambda item: item[1], reverse=True)
 
-  set_num = 5
-
   final_att_list = []
 
-  for i in range(set_num):
-    for index in att_index[sorted_total_clustering_box[:set_num][i][0]]:
+  for i in range(end):
+    for index in att_index[sorted_total_clustering_box[:][i][0]]:
       final_att_list.append(df.Name[index])
 
   return final_att_list
