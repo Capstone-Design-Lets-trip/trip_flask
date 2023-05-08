@@ -114,11 +114,10 @@ def togo():
         else:
             dup.append(token)
 
-    print(dup)
     for i in range(len(dup)):
         dup[i] = dup[i].replace("'",'')
 
-    print(to_return)
+
     print(dup)
     # start_time = datetime.datetime.now().replace(hour=10)
     # end_time=datetime.datetime.now() + datetime.timedelta(days=3)
@@ -127,8 +126,6 @@ def togo():
     result_1=att_recommend(input_keyword = str(dup))
     result_2=choose_attraction(result_1,'./total_Osaka.csv')
     result_3=attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.get('travel_start'),param.get('travel_end'))
-    print(type(result_3))
-    print(type(json.loads(json.dumps(result_3))))
     for i in result_3:
         print(type(i))
         print(i)
@@ -136,6 +133,7 @@ def togo():
     response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
     print(type(response))
     print(response)
+    print(response.text)
     return response, 200
 
 
