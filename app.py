@@ -6,6 +6,8 @@ from flask import Flask, jsonify, request, render_template, redirect
 from flask_cors import CORS
 import datetime
 import os
+import shutil
+
 import re
 
 
@@ -85,10 +87,9 @@ def togo():
     # param_token=request.get_json('eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyYzlmYTNmODg3YTI5MDMxMDE4N2EzMjk4MjRhMDAwMCIsImlzcyI6ImxldHN0cmlwIiwiaWF0IjoxNjgzNTI3MjkxLCJleHAiOjE2ODM2MTM2OTF9.iTquMcCW3OfWlZUQtubZQ7lmszlTJacgJ4R5z55ObiMuogIn8dGXpk03pvinGAHe5OcXP6sL5W0FGFR-IHuH7Q')
     # print(param_token.get('email'))
     name=param.get('email')
-    base = pd.read_csv("User_df.csv")
-    os.system('sudo mkdir 1234')
-    base.to_csv("./member_info/" + name + ".csv", index=False)
-    os.system('sudo mkdir 5678')
+    src_path = 'User_df.csv'
+    dst_path = './member_info/{}.csv'.format(name)
+    shutil.copy(src_path, dst_path)
 
     keys=list(param.keys())
     format = '%Y-%m-%d %H:%M'
