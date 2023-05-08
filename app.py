@@ -128,6 +128,9 @@ def togo():
     result_1=att_recommend(input_keyword = str(dup))
     result_2=choose_attraction(result_1,'./total_Osaka.csv')
     result_3=attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.get('travel_start'),param.get('travel_end'))
+    print(result_1)
+    print(result_2)
+    print(result_3)
     for i in result_3:
         print(type(i))
         print(i)
@@ -136,7 +139,7 @@ def togo():
     print(type(response))
     print(response)
     print(response.text)
-    return response, 200
+    return 200
 
 
 if __name__ == "__main__":
