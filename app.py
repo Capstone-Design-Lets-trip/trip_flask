@@ -72,7 +72,6 @@ def update_csv():
     df=pd.read_csv("./member_info/"+name+".csv")
     df.loc[df['Name'] == attraction, 'clicked'] += 1
     df.to_csv("./member_info/"+name+".csv", index=False)
-    os.system(f"sudo chmod 755 {directory}/{name}.csv")
 
 
 
@@ -88,7 +87,6 @@ def togo():
     name=param.get('email')
     base = pd.read_csv("User_df.csv")
     base.to_csv("./member_info/" + name + ".csv", index=False)
-    os.system(f"sudo chmod 755 {directory}/{name}.csv")
 
     keys=list(param.keys())
     format = '%Y-%m-%d %H:%M'
