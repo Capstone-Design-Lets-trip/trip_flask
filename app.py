@@ -104,6 +104,7 @@ def togo():
 
     dup = []
     for token in to_return:
+        print(type(token))
         if type(token) == datetime.datetime:
             continue
         if ',' in token:
