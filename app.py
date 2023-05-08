@@ -105,7 +105,7 @@ def togo():
     dup = []
     for token in to_return:
         print(type(token))
-        if type(token) == datetime.datetime:
+        if type(token) == datetime.datetime or token=='travel_start' or token=='travel_end':
             continue
         if ',' in token:
             ch1 = token.split(',')
