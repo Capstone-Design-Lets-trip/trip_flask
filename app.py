@@ -78,11 +78,12 @@ def update_csv():
 def togo():
     to_return=[]
     param = request.get_json()
-    param_token=request.get_json('eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyYzlmYTNmODg3YTI5MDMxMDE4N2EzMjk4MjRhMDAwMCIsImlzcyI6ImxldHN0cmlwIiwiaWF0IjoxNjgzNTI3MjkxLCJleHAiOjE2ODM2MTM2OTF9.iTquMcCW3OfWlZUQtubZQ7lmszlTJacgJ4R5z55ObiMuogIn8dGXpk03pvinGAHe5OcXP6sL5W0FGFR-IHuH7Q')
-    print(param_token.get('email'))
-    name=param_token.get('email')
-    base = pd.read_csv("User_df.csv")
-    base.to_csv("./member_info/" + name + ".csv", index=False)
+    print(param)
+    # param_token=request.get_json('eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyYzlmYTNmODg3YTI5MDMxMDE4N2EzMjk4MjRhMDAwMCIsImlzcyI6ImxldHN0cmlwIiwiaWF0IjoxNjgzNTI3MjkxLCJleHAiOjE2ODM2MTM2OTF9.iTquMcCW3OfWlZUQtubZQ7lmszlTJacgJ4R5z55ObiMuogIn8dGXpk03pvinGAHe5OcXP6sL5W0FGFR-IHuH7Q')
+    # print(param_token.get('email'))
+    # name=param_token.get('email')
+    # base = pd.read_csv("User_df.csv")
+    # base.to_csv("./member_info/" + name + ".csv", index=False)
     keys=list(param.keys())
     format = '%Y-%m-%d %H:%M'
     for i in range(len(keys) - 1):
