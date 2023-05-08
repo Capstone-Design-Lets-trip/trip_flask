@@ -506,16 +506,16 @@ def attraction_route_recommend(input='', input_time='', finish_times='', Osaka_t
 
         user_df.suggested = user_df.candidate.copy()
 
-        lastpoint = totalList[bfPath[-1]].name
-        first_day_visit = 0
-        input_time += dt.timedelta(days=1)
-        input_time = input_time.replace(hour=int(go_out_time[:2]), minute=int(go_out_time[-2:]))
-        attrList = []
-
         travel_schedule = make_json_file(totalList, bfPath, input_time, graph)
 
         empty_list.append(travel_schedule)
 
         print_time(totalList, bfPath, input_time, graph)
+
+        lastpoint = totalList[bfPath[-1]].name
+        first_day_visit = 0
+        input_time += dt.timedelta(days=1)
+        input_time = input_time.replace(hour=int(go_out_time[:2]), minute=int(go_out_time[-2:]))
+        attrList = []
 
     return empty_list
