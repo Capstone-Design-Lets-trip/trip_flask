@@ -79,6 +79,7 @@ def togo():
     to_return=[]
     param = request.get_json()
     name = param.get('email')
+    print(name)
     base = pd.read_csv("User_df.csv")
     base.to_csv("./member_info/" + name + ".csv", index=False)
     keys=list(param.keys())
