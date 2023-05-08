@@ -429,6 +429,7 @@ def attraction_route_recommend(input='', input_time='', finish_times='', Osaka_t
     for day in range(1, total_travel_days):
         travel_time = 0
         allocationTime = ((input_time.replace(hour=int(go_in_time[:2]), minute=int(go_in_time[-2:])) - input_time) / 60).seconds
+        print(allocationTime)
         move_time = 30
 
         for i in range(len(total_boxes)):
