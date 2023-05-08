@@ -131,15 +131,15 @@ def togo():
     print(result_1)
     print(result_2)
     print(result_3)
-    for i in result_3:
-        print(type(i))
-        print(i)
+    # for i in result_3:
+    #     print(type(i))
+    #     print(i)
     #print(json.loads(json.dumps(result_3)))
     response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
-    print(type(response))
-    print(response)
-    print(response.text)
-    return 200
+    # print(type(response))
+    # print(response)
+    # print(response.text)
+    return '200'
 
 
 if __name__ == "__main__":
