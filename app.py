@@ -5,6 +5,7 @@ from attraction_route_recommend import *
 from flask import Flask, jsonify, request, render_template, redirect
 from flask_cors import CORS
 import datetime
+import os
 import re
 
 
@@ -64,12 +65,14 @@ def test_togo():
 
 @app.route('/to_update',methods=['POST'])
 def update_csv():
+    directory='./member_info'
     param=request.get_json()
     name=param.get('email')
     attraction=param.get('attraction')
     df=pd.read_csv("./member_info/"+name+".csv")
     df.loc[df['Name'] == attraction, 'clicked'] += 1
     df.to_csv("./member_info/"+name+".csv", index=False)
+    os.system(f"sudo chmod 644 {directory}/{name}.csv")
 
 
 
