@@ -58,5 +58,9 @@ def att_recommend(path  = './total_Osaka.csv', input_keyword=''):
 
   attraction = []
 
+  for i in range(len(sim_scores)):
+    box = list(sim_scores[i])
+    attraction.append(box[0])
+
   return attraction
 
