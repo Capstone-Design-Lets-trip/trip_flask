@@ -91,9 +91,7 @@ def togo():
     keys=list(param.keys())
     format = '%Y-%m-%d %H:%M'
     for i in range(len(keys) - 1):
-        if (keys[i]=='email'):
-            continue
-        elif (keys[i]=='startDate' or keys[i]=='endDate'):
+        if (keys[i]=='startDate' or keys[i]=='endDate'):
             to_return.append(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format))
             print(param.get(keys[i]).replace('T',' '))
         else:
@@ -116,6 +114,7 @@ def togo():
         else:
             dup.append(token)
 
+    print(dup)
     for i in range(len(dup)):
         dup[i] = dup[i].replace("'",'')
 
