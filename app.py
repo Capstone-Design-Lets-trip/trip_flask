@@ -74,6 +74,7 @@ def update_csv():
     df=pd.read_csv("./member_info/"+name+".csv")
     df.loc[df['Name'] == attraction, 'clicked'] += 1
     df.to_csv("./member_info/"+name+".csv", index=False)
+    return "Good"
 
 
 
