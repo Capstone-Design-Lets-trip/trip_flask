@@ -94,6 +94,8 @@ def togo():
         if (keys[i]=='startDate' or keys[i]=='endDate'):
             to_return.append(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format))
             print(param.get(keys[i]).replace('T',' '))
+        elif (keys[i] == 'travel_start' or keys[i] == 'travel_end'):
+            continue
         else:
             to_return.append(param.get(keys[i]))
             print(param.get(keys[i]))
@@ -104,8 +106,7 @@ def togo():
 
     dup = []
     for token in to_return:
-        print(type(token))
-        if type(token) == datetime.datetime or token=='travel_start' or token=='travel_end':
+        if type(token) == datetime.datetime:
             continue
         if ',' in token:
             ch1 = token.split(',')
