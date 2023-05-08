@@ -67,10 +67,10 @@ def test_togo():
 
 @app.route('/to_update',methods=['POST'])
 def update_csv():
-    directory='./member_info'
     param=request.get_json()
+    print(param)
     name=param.get('email')
-    attraction=param.get('attraction')
+    attraction=param.get('name')
     df=pd.read_csv("./member_info/"+name+".csv")
     df.loc[df['Name'] == attraction, 'clicked'] += 1
     df.to_csv("./member_info/"+name+".csv", index=False)
