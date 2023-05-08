@@ -81,11 +81,8 @@ def update_csv():
 @app.route('/togo', methods=['POST'])
 def togo():
     to_return=[]
-    directory='./member_info'
     param = request.get_json()
     print(param)
-    # param_token=request.get_json('eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyYzlmYTNmODg3YTI5MDMxMDE4N2EzMjk4MjRhMDAwMCIsImlzcyI6ImxldHN0cmlwIiwiaWF0IjoxNjgzNTI3MjkxLCJleHAiOjE2ODM2MTM2OTF9.iTquMcCW3OfWlZUQtubZQ7lmszlTJacgJ4R5z55ObiMuogIn8dGXpk03pvinGAHe5OcXP6sL5W0FGFR-IHuH7Q')
-    # print(param_token.get('email'))
     name=param.get('email')
     src_path = 'User_df.csv'
     dst_path = './member_info/{}.csv'.format(name)
@@ -94,7 +91,9 @@ def togo():
     keys=list(param.keys())
     format = '%Y-%m-%d %H:%M'
     for i in range(len(keys) - 1):
-        if (keys[i]=='startDate' or keys[i]=='endDate'):
+        if (keys[i]=='email'):
+            continue
+        elif (keys[i]=='startDate' or keys[i]=='endDate'):
             to_return.append(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format))
             print(param.get(keys[i]).replace('T',' '))
         else:
