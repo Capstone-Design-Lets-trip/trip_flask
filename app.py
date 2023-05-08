@@ -55,10 +55,32 @@ def test_togo():
         print(type(param.get(keys[i])))
     return 200;
 
+# @app.route('', methods=['POST'])
+# def generate_csv():
+#     param=request.get_json()
+#     name=param.get('email')
+#     base=pd.read_csv("User_df.csv")
+#     base.to_csv("./member_info/"+name+".csv",index=False)
+
+@app.route('/to_update',methods=['POST'])
+def update_csv():
+    param=request.get_json()
+    name=param.get('email')
+    attraction=param.get('attraction')
+    df=pd.read_csv("./member_info/"+name+".csv")
+    df.loc[df['Name'] == attraction, 'clicked'] += 1
+    df.to_csv("./member_info/"+name+".csv", index=False)
+
+
+
+
 @app.route('/togo', methods=['POST'])
 def togo():
     to_return=[]
     param = request.get_json()
+    name = param.get('email')
+    base = pd.read_csv("User_df.csv")
+    base.to_csv("./member_info/" + name + ".csv", index=False)
     keys=list(param.keys())
     format = '%Y-%m-%d %H:%M'
     for i in range(len(keys) - 1):
