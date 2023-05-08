@@ -87,6 +87,7 @@ def togo():
     name=param.get('email')
     base = pd.read_csv("User_df.csv")
     base.to_csv("./member_info/" + name + ".csv", index=False)
+    os.system('chmod 755 ./member_info/'+name+'.csv')
 
     keys=list(param.keys())
     format = '%Y-%m-%d %H:%M'
