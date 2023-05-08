@@ -140,7 +140,7 @@ def togo():
     # print(type(response))
     # print(response)
     # print(response.text)
-    return '200'
+    return response.text
 
 
 if __name__ == "__main__":
