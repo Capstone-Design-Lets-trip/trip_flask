@@ -346,7 +346,7 @@ def make_json_file(totalList, bfpath, input_time, graph):
     start_time = input_time
     names.append(totalList[bfpath[0]].name)
     move_times.append(0)
-    arrive_times.append('Null')
+    arrive_times.append(None)
     depart_times.append((input_time.strftime("%Y-%m-%d %H:%M:%S:%f")))
 
     for x in range(1, len(bfpath)):

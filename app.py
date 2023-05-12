@@ -137,9 +137,10 @@ def togo():
     #     print(i)
     #print(json.loads(json.dumps(result_3)))
     response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
-    # print(type(response))
+    print(type(response))
     # print(response)
-    # print(response.text)
+    print(response.text)
+    print(type(response.text))
     return response.text
 
 
