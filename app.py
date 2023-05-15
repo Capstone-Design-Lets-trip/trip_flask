@@ -100,7 +100,13 @@ def togo():
     param = request.get_json()
     print(param)
     name=param.get('email')
-    con = connection(name)
+    # con = connection(name)
+    con = mysql.connector.connect(
+      host="root",
+      user="letstrip",
+      password="Letstrip123!!",
+      database="Rl_info"
+    )
     create_table(con)
     src_path = 'User_df.csv'
     dst_path = './member_info/{}.csv'.format(name)
