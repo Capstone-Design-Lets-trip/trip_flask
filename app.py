@@ -2,6 +2,8 @@ import requests
 from att_recommend import *
 from choose_attraction import *
 from attraction_route_recommend import *
+from Thompson_samplings import *
+from att_list_by_ts import *
 from flask import Flask, jsonify, request, render_template, redirect
 from flask_cors import CORS
 import datetime
@@ -9,7 +11,8 @@ import os
 import shutil
 
 import re
-
+global sorted_total_clustering
+sorted_total_clustering=''
 
 app = Flask(__name__)
 CORS(app)  # 모든 origin에 대해 CORS를 허용합니다.
@@ -74,9 +77,15 @@ def update_csv():
     df=pd.read_csv("./member_info/"+name+".csv")
     df.loc[df['Name'] == attraction, 'clicked'] += 1
     df.to_csv("./member_info/"+name+".csv", index=False)
+    re_box = Thompson_Sampling(name, attraction, reco=0, total_Osakak_df="./total_Osaka.csv")
     return "Good"
 
 
+def generate_again():
+    global sorted_total_clustering
+    TS_list = Thompson_Sampling(name, attraction, reco=1, total_Osakak_df="./total_Osaka.csv")
+    result_2 = make_att_list_by_TS(sorted_total_clustering, TS_list, path="./total_Osaka.csv")
+    result_3 = attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.get('travel_start'),param.get('travel_end'))
 
 
 @app.route('/togo', methods=['POST'])
@@ -85,6 +94,8 @@ def togo():
     param = request.get_json()
     print(param)
     name=param.get('email')
+    con = connection(name)
+    create_table(con)
     src_path = 'User_df.csv'
     dst_path = './member_info/{}.csv'.format(name)
     shutil.copy(src_path, dst_path)
