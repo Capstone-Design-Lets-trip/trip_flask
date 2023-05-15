@@ -65,7 +65,7 @@ class ThompsonSampling:
 
 def connection(name=''):
     try:
-        con = sqlite3.connect(name+'.db')
+        con = sqlite3.connect('./db/'+name+'.db')
         return con
     except Error:
         print(Error)
