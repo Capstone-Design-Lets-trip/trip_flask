@@ -17,33 +17,6 @@ import matplotlib.pyplot as plt
 def find_clustering_index(df = '', click_item = ''):
   return df['cluster'][df[df['Name'] == click_item].index[0]]
 
-def make_score_by_rank(rec_box, cluster_unique):
-  ts_list = {}
-  score = 15
-  for item in rec_box:
-    if item[0] in cluster_unique:
-      ts_list[item[0]] = score
-      score -= 1
-  return ts_list
-
-def make_ts_list_in_TS(sampled_theta, cluster_unique):
-    rec_box = []
-    for i in range(len(sampled_theta)):
-        rec_box.append((i, sampled_theta[i]))
-    rec_box.sort(key=lambda x: x[1], reverse=True)
-    ts_list = make_score_by_rank(rec_box, cluster_unique)
-
-    return ts_list
-
-def make_cluster_unique(df):
-    cluster_unique = list(df.cluster.unique())
-
-    if 'Nan' in cluster_unique:
-        del cluster_unique[cluster_unique.index('Nan')]
-    cluster_unique = [int(i) for i in cluster_unique]
-
-    return cluster_unique
-
 class ThompsonSampling:
     def __init__(self, num_items):
         self.num_items = num_items
@@ -53,7 +26,7 @@ class ThompsonSampling:
     def recommend(self):
         sampled_theta = np.random.beta(self.alpha, self.beta)
         recommended_item = np.argmax(sampled_theta)
-        return recommended_item, sampled_theta
+        return recommended_item
 
     def update(self, item, reward):
         if reward == 1:
@@ -61,28 +34,20 @@ class ThompsonSampling:
         else:
             self.beta[item] += 1
 
-def Thompson_Sampling(user_id = '', click_item = '', reco = '', total_Osakak_df = '', user_models = {}):
+user_models = {}
+
+def Thompson_Sampling(user_id = '', click_item = '', reco = '', total_Osakak_df = ''):
     df = pd.read_csv(total_Osakak_df)
-    cluster_unique = make_cluster_unique(df)
+    click_item = find_clustering_index(df, click_item)
+    if user_id not in user_models:
+        user_models[user_id] = ThompsonSampling(len(df.cluster.unique()))
+    recommender = user_models[user_id]
+    recommended_item = recommender.recommend()
+    reward = int(click_item == recommended_item)
+    recommender.update(recommended_item, reward)
+    print("모델이 갱신되었습니다.")
 
     if reco == 1:
-        if user_id not in user_models:
-            print('해당하는 유저의 정보가 없습니다!')
-            return 'Nan'
-        recommender = user_models[user_id]
-        recommended_item, sampled_theta = recommender.recommend()
-        ts_list = make_ts_list_in_TS(sampled_theta, cluster_unique)
         print("추천된 항목: ", recommended_item)
-        return ts_list
-
-    else:
-        click_item = int(find_clustering_index(df, click_item))
-        if user_id not in user_models:
-            user_models[user_id] = ThompsonSampling(len(df.cluster.unique()))
-        recommender = user_models[user_id]
-        recommended_item, _ = recommender.recommend()
-        reward = int(click_item == recommended_item)
-        recommender.update(recommended_item, reward)
-        print("모델이 갱신되었습니다.")
-        return 'Nan'
+        # return recommended_item
 
