@@ -14,6 +14,7 @@ import pickle
 import sqlite3
 from sqlite3 import Error
 import pickle
+import mysql.connector
 
 def find_clustering_index(df = '', click_item = ''):
   return df['cluster'][df[df['Name'] == click_item].index[0]]
@@ -114,7 +115,13 @@ def Thompson_Sampling(user_id = '', click_item = '', reco = '', total_Osakak_df 
 
     # 만들어지는 곳
     user_models = {}
-    con = connection(user_id)
+    con = mysql.connector.connect(
+      host="root",
+      user="letstrip",
+      password="Letstrip123!!",
+      database="Rl_info"
+    )
+    print(con)
     exists = check_id_exists(con, user_id)
     if not exists:
         user_models[user_id] = ThompsonSampling(len(df.cluster.unique()))  # len(df.cluster.unique()) 객체형성할때 필수값
