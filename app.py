@@ -80,10 +80,14 @@ def update_csv():
     re_box = Thompson_Sampling(name, attraction, reco=0, total_Osakak_df="./total_Osaka.csv")
     return "Good"
 
-
+@app.route('/togo_re', methods=['POST'])
 def generate_again():
+    param = request.get_json()
+    start_time=datetime.datetime.strptime(param.get('startDate').replace('T',' '),format)
+    end_time=datetime.datetime.strptime(param.get('endDate').replace('T',' '),format)
+    name=param.get('email')
     global sorted_total_clustering
-    TS_list = Thompson_Sampling(name, attraction, reco=1, total_Osakak_df="./total_Osaka.csv")
+    TS_list = Thompson_Sampling('', '', reco=1, total_Osakak_df="./total_Osaka.csv")
     result_2 = make_att_list_by_TS(sorted_total_clustering, TS_list, path="./total_Osaka.csv")
     result_3 = attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.get('travel_start'),param.get('travel_end'))
 
