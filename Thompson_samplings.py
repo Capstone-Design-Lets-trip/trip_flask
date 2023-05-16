@@ -129,6 +129,9 @@ def Thompson_Sampling(user_id = '', click_item = '', reco = '', total_Osakak_df 
     # )
     # print(con)
     print(user_id)
+    print(user_id)
+    print(user_id)
+    print(user_id)
     con = connection(user_id)
     exists = check_id_exists(con, user_id)
     if not exists:
