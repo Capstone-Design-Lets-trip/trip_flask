@@ -71,6 +71,7 @@ def connection(name=''):
         con = sqlite3.connect('./db/'+name+'.db')
         if con == 'None':
             print("con==None이야")
+        os.system('sudo touch 123.text')
         os.system('sudo touch '+'./db/'+name+'.db')
         return con
     except Error:
