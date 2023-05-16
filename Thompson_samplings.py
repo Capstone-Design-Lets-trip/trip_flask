@@ -69,10 +69,9 @@ def connection(name=''):
     try:
         print("try로 들어옴??")
         con = sqlite3.connect('./db/'+name+'.db')
-        if con == 'None':
-            print("con==None이야")
-        os.system('touch 123.text')
-        os.system('touch '+'./db/'+name+'.db')
+        if con:
+            os.system('touch '+'./db/'+name+'.db')
+            con = sqlite3.connect('./db/'+name+'.db')
         return con
     except Error:
         print(Error)
