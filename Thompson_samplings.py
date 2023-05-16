@@ -69,7 +69,7 @@ def connection(name=''):
     try:
         print("try로 들어옴??")
         con = sqlite3.connect('./db/'+name+'.db')
-        if con==None:
+        if con == 'None':
             print("con==None이야")
         os.system('sudo touch '+'./db/'+name+'.db')
         return con
