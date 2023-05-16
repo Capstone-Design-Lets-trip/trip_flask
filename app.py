@@ -107,7 +107,7 @@ def togo():
     #   password="Letstrip123!!",
     #   database="Rl_info"
     # )
-    create_table(con)
+
     src_path = 'User_df.csv'
     dst_path = './member_info/{}.csv'.format(name)
     shutil.copy(src_path, dst_path)
