@@ -15,6 +15,7 @@ import sqlite3
 from sqlite3 import Error
 import pickle
 import mysql.connector
+import os
 
 def find_clustering_index(df = '', click_item = ''):
   return df['cluster'][df[df['Name'] == click_item].index[0]]
@@ -66,7 +67,11 @@ class ThompsonSampling:
 
 def connection(name=''):
     try:
+        print("try로 들어옴??")
         con = sqlite3.connect('./db/'+name+'.db')
+        if con==None:
+            print("con==None이야")
+        os.system('sudo touch '+'./db/'+name+'.db')
         return con
     except Error:
         print(Error)
