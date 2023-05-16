@@ -72,6 +72,7 @@ def connection(name=''):
         if con:
             os.system('touch '+'./db/'+name+'.db')
             con = sqlite3.connect('./db/'+name+'.db')
+            create_table(con)
         return con
     except Error:
         print(Error)
