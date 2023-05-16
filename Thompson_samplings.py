@@ -128,10 +128,11 @@ def Thompson_Sampling(user_id = '', click_item = '', reco = '', total_Osakak_df 
     #   database="Rl_info"
     # )
     # print(con)
-    print(user_id)
-    print(user_id)
-    print(user_id)
-    print(user_id)
+    print("여기들어옴?")
+    print("여기들어옴?")
+    print("여기들어옴?")
+    print("여기들어옴?")
+    print("여기들어옴?")
     con = connection(user_id)
     exists = check_id_exists(con, user_id)
     if not exists:
