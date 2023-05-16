@@ -121,13 +121,15 @@ def Thompson_Sampling(user_id = '', click_item = '', reco = '', total_Osakak_df 
 
     # 만들어지는 곳
     user_models = {}
-    con = mysql.connector.connect(
-      host="root",
-      user="letstrip",
-      password="Letstrip123!!",
-      database="Rl_info"
-    )
-    print(con)
+    # con = mysql.connector.connect(
+    #   host="root",
+    #   user="letstrip",
+    #   password="Letstrip123!!",
+    #   database="Rl_info"
+    # )
+    # print(con)
+    print(user_id)
+    con = connection(user_id)
     exists = check_id_exists(con, user_id)
     if not exists:
         user_models[user_id] = ThompsonSampling(len(df.cluster.unique()))  # len(df.cluster.unique()) 객체형성할때 필수값
