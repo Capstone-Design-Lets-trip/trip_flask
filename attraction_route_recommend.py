@@ -403,17 +403,40 @@ def attraction_route_recommend(input='', input_time='', finish_times='', Osaka_t
     temp_box = list(input_df.cluster)
     temp_box = [int(num) for num in temp_box]
 
-    total_boxes = []
+    # total_boxes = []
+    # jubox = []
+    #
+    # jubox.append(input_df.Name[0])
+    # for i in range(1, len(temp_box)):
+    #     if temp_box[i - 1] != temp_box[i]:
+    #         total_boxes.append(jubox)
+    #         jubox = []
+    #         jubox.append(input_df.Name[i])
+    #     else:
+    #         jubox.append(input_df.Name[i])
+    #
+    tmp_total_boxes = {}
     jubox = []
 
     jubox.append(input_df.Name[0])
     for i in range(1, len(temp_box)):
         if temp_box[i - 1] != temp_box[i]:
-            total_boxes.append(jubox)
+            if temp_box[i - 1] in tmp_total_boxes:
+                tmp_total_boxes[temp_box[i - 1]].extend(jubox)
+            else:
+                tmp_total_boxes[temp_box[i - 1]] = jubox
             jubox = []
             jubox.append(input_df.Name[i])
         else:
             jubox.append(input_df.Name[i])
+
+        if i == len(temp_box) - 1:
+            if temp_box[i] in tmp_total_boxes:
+                tmp_total_boxes[temp_box[i]].extend(jubox)
+            else:
+                tmp_total_boxes[temp_box[i]] = jubox
+
+    total_boxes = list(tmp_total_boxes.values())
 
     addressList = list(df['Address'])
 
