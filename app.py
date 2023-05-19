@@ -78,7 +78,7 @@ def update_csv():
     attraction=param.get('name')
     df=pd.read_csv("./member_info/"+name+".csv")
     df.loc[df['Name'] == attraction, 'clicked'] += 1
-    df.to_csv("./member_info/"+name+".csv", index=False)
+    df.to_csv("./member_info/"+name+".csv", index=False, mode='w')
     re_box = Thompson_Sampling(name, attraction, reco=0, total_Osakak_df="./total_Osaka.csv")
     return "Good"
 
