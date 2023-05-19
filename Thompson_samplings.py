@@ -68,7 +68,7 @@ def connection(name=''):
     try:
         print("try로 들어옴??")
         con = sqlite3.connect('./db/'+name+'.db')
-        if con:
+        if not con:
             os.system('touch '+'./db/'+name+'.db')
             con = sqlite3.connect('./db/'+name+'.db')
             create_table(con)
@@ -132,6 +132,7 @@ def Thompson_Sampling(user_id = '', click_item = '', reco = '', total_Osakak_df 
     print("여기들어옴?")
     print("여기들어옴?")
     print("여기들어옴?")
+    print(user_id)
     con = connection(user_id)
     exists = check_id_exists(con, user_id)
     if not exists:
