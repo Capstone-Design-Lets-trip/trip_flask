@@ -114,7 +114,7 @@ def get_object_by_id(con, id):
     cursor_db.execute("SELECT serialized_obj FROM checkup WHERE id = ?", (id,))
     result = cursor_db.fetchone()
 
-    if result is not None
+    if result is not None:
         serialized_data = result[0]
         loaded_data = pickle.loads(serialized_data)
         return loaded_data
