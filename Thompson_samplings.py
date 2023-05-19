@@ -87,7 +87,8 @@ def create_table(con):
 #one_data가 객체값
 def insert_one(con, id, one_data):
     cursor_db = con.cursor()
-    cursor_db.execute('INSERT INTO checkup(id, thompson) VALUES (?,?)',(id,one_data))
+    serialized_data = pickle.dumps(one_data)
+    cursor_db.execute('INSERT INTO checkup(id, thompson) VALUES (?,?)',(id,serialized_data))
     con.commit()
 
 def check_id_exists(con, id):
