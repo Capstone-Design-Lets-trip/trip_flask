@@ -14,7 +14,6 @@ import pickle
 import sqlite3
 from sqlite3 import Error
 import pickle
-import mysql.connector
 import os
 
 def find_clustering_index(df = '', click_item = ''):
