@@ -123,7 +123,8 @@ def togo():
     # src_path = 'User_df.csv'
     # dst_path = './member_info/{}.csv'.format(name)
     # shutil.copy(src_path, dst_path)
-    os.system("sudo cp User_df.csv ./member_info/" + name + ".csv")
+    if not os.path.isfile("./member_info/"+name+".csv"):
+        os.system("sudo cp User_df.csv ./member_info/" + name + ".csv")
 
     keys=list(param.keys())
     format = '%Y-%m-%d %H:%M'
