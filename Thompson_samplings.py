@@ -125,8 +125,14 @@ def get_object_by_id(con, id):
 
 def update_one(con, recommender, user_id):
     cursor_db = con.cursor()
-    cursor_db.execute('UPDATE checkup SET thompson = recommender where id = user_id')
+
+    # 클래스 객체를 직렬화하여 데이터베이스에 저장
+    serialized_recommender = pickle.dumps(recommender)
+
+    # 데이터베이스 레코드 업데이트
+    cursor_db.execute('UPDATE checkup SET thompson = ? WHERE id = ?', (serialized_recommender, user_id))
     con.commit()
+
 
 def Thompson_Sampling(user_id = '', click_item = '', reco = '', total_Osakak_df = ''):
     df = pd.read_csv(total_Osakak_df)
