@@ -83,7 +83,7 @@ def update_csv():
     return "Good"
 
 @app.route('/to_update_scrap',methods=['POST'])
-def update_csv():
+def update_scrap_csv():
     param=request.get_json()
     print(param)
     name=param.get('email')
