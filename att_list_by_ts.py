@@ -9,7 +9,8 @@ Original file is located at
 
 import pandas as pd
 
-def make_att_list_by_TS(sorted_total_clustering_box = '', TS_list = '', path = ''):
+def make_att_list_by_TS(sorted_total_clustering_box='', TS_list='', path='', user_df_path=''):
+  user_df = pd.read_csv(user_df_path)
   score_box = {}
   score = 15
   att_index = []
@@ -18,13 +19,19 @@ def make_att_list_by_TS(sorted_total_clustering_box = '', TS_list = '', path = '
 
   end = len(df.cluster.unique())
 
+  choice_list = []
+
+  for i in range(len(user_df)):
+    if user_df['visit'][i] == 1:
+      choice_list.append(user_df['Name'][i])
+
   for item in sorted_total_clustering_box:
     score_box[item[0]] = score
     score -= 1
 
   score = 15
   for item in TS_list:
-    score_box[item] = score
+    score_box[item] += score
     score -= 1
 
   for i in range(end):
@@ -35,5 +42,9 @@ def make_att_list_by_TS(sorted_total_clustering_box = '', TS_list = '', path = '
   for i in range(end):
     for index in att_index[sorted_total_clustering_box[:][i][0]]:
       final_att_list.append(df.Name[index])
+
+  for choiced in choice_list:
+    final_att_list.remove(choiced)
+    final_att_list.insert(0, choiced)
 
   return final_att_list
