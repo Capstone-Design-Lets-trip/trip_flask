@@ -82,6 +82,18 @@ def update_csv():
     re_box = Thompson_Sampling(name, attraction, reco=0, total_Osakak_df="./total_Osaka.csv")
     return "Good"
 
+@app.route('/to_update_scrap',methods=['POST'])
+def update_csv():
+    param=request.get_json()
+    print(param)
+    name=param.get('email')
+    attraction=param.get('name')
+    df=pd.read_csv("./member_info/"+name+".csv")
+    df.loc[df['Name'] == attraction, 'visit'] += 1 #이부분 콜럼명 바꾸기...
+    df.to_csv("./member_info/"+name+".csv", index=False)
+    re_box = Thompson_Sampling(name, attraction, reco=0, total_Osakak_df="./total_Osaka.csv")
+    return "Good"
+
 @app.route('/togo_re', methods=['POST'])
 def generate_again():
     param = request.get_json()
