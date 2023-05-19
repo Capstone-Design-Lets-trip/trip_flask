@@ -111,7 +111,7 @@ def check_id_exists(con, id):
 
 def get_object_by_id(con, id):
     cursor_db = con.cursor()
-    cursor_db.execute("SELECT serialized_obj FROM checkup WHERE id = ?", (id,))
+    cursor_db.execute("SELECT thompson FROM checkup WHERE id = ?", (id,))
     result = cursor_db.fetchone()
 
     if result is not None:
