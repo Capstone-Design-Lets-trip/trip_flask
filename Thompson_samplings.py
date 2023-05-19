@@ -97,17 +97,30 @@ def check_id_exists(con, id):
     result = cursor_db.fetchone()[0]
     return bool(result)
 
+# def get_object_by_id(con, id):
+#     cursor_db = con.cursor()
+#     cursor_db.execute("SELECT serialized_obj FROM checkup WHERE id = ?", (id,))
+#     result = cursor_db.fetchone()
+#
+#     if result is not None:
+#         serialized_obj = result[0]
+#         obj = pickle.loads(serialized_obj)
+#         return obj
+#
+#     return None
+
 def get_object_by_id(con, id):
     cursor_db = con.cursor()
     cursor_db.execute("SELECT serialized_obj FROM checkup WHERE id = ?", (id,))
     result = cursor_db.fetchone()
 
-    if result is not None:
-        serialized_obj = result[0]
-        obj = pickle.loads(serialized_obj)
-        return obj
+    if result is not None
+        serialized_data = result[0]
+        loaded_data = pickle.loads(serialized_data)
+        return loaded_data
 
     return None
+
 
 
 def update_one(con, recommender, user_id):
