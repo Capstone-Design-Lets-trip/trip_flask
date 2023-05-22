@@ -179,7 +179,15 @@ def togo():
     headers = {
         "Authorization": "Bearer " + token
     }
-    response = requests.post("http://letstrip.shop:8080/survey/save", params=param, headers=headers)
+    # 드롭하려는 컬럼명을 리스트에 추가
+    columns_to_drop = ["token"]
+
+    print(token)
+    # 원하는 컬럼 드롭
+    for column in columns_to_drop:
+        param.pop(column, None)
+    print(param)
+    response_1 = requests.post("http://letstrip.shop:8080/survey/save", params=param, headers=headers)
     response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
     print(type(response))
     # print(response)
