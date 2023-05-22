@@ -186,7 +186,8 @@ def togo():
 
     for i in range(len(keys)):
         if (keys[i]=='startDate' or keys[i]=='endDate'):
-            to_go_response_1.append(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format))
+            to_go_response_1.append(datetime.datetime(param.get(keys[i]).replace('T',' ')).isoformat)
+            # to_go_response_1.append(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format))
         elif keys[i]=='token':
             continue
         else:
