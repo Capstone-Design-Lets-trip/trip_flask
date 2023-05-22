@@ -188,8 +188,6 @@ def togo():
         if (keys[i]=='startDate' or keys[i]=='endDate'):
             to_go_response_1.append(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format))
             print(param.get(keys[i]).replace('T',' '))
-        elif (keys[i] == 'travel_start' or keys[i] == 'travel_end'):
-            continue
         else:
             to_go_response_1.append(param.get(keys[i]))
             print(param.get(keys[i]))
@@ -202,7 +200,7 @@ def togo():
     for column in columns_to_drop:
         to_go_response_1.pop(column, None)
     print(to_go_response_1)
-    response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=to_go_response_1, headers=headers)
+    response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=dict(to_go_response_1), headers=headers)
     response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
     print(type(response))
     # print(response)
