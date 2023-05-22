@@ -125,6 +125,7 @@ def togo():
     for i in range(len(keys)):
         print(keys[i])
         print(param.get(keys[i]))
+        print(type(param.get(keys[i])))
     for i in range(len(keys) - 4):
         if (keys[i]=='startDate' or keys[i]=='endDate'):
             to_return.append(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format))
