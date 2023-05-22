@@ -113,12 +113,6 @@ def togo():
     print(param)
     name=param.get('email')
     con = connection(name)
-    # con = mysql.connector.connect(
-    #   host="root",
-    #   user="letstrip",
-    #   password="Letstrip123!!",
-    #   database="Rl_info"
-    # )
 
     # src_path = 'User_df.csv'
     # dst_path = './member_info/{}.csv'.format(name)
@@ -159,8 +153,7 @@ def togo():
 
 
     print(dup)
-    # start_time = datetime.datetime.now().replace(hour=10)
-    # end_time=datetime.datetime.now() + datetime.timedelta(days=3)
+
     start_time=datetime.datetime.strptime(param.get('startDate').replace('T',' '),format)
     end_time=datetime.datetime.strptime(param.get('endDate').replace('T',' '),format)
     result_1=att_recommend(input_keyword = str(dup))
@@ -169,46 +162,16 @@ def togo():
     print(result_1)
     print(result_2)
     print(result_3)
-    # for i in result_3:
-    #     print(type(i))
-    #     print(i)
-    #print(json.loads(json.dumps(result_3)))
 
     token = param["token"]  # 예시로 token 값을 추출
     # 요청 헤더에 토큰 추가
     headers = {
-        "Authorization": "Bearer {토큰값}"
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json; charset=utf-8"
     }
-    # 드롭하려는 컬럼명을 리스트에 추가
-    columns_to_drop = ["token"]
 
-    # to_go_response_1=[]
-    #
-    # for i in range(len(keys)):
-    #     if (keys[i]=='startDate' or keys[i]=='endDate'):
-    #         to_go_response_1.append(datetime.datetime(param.get(keys[i]).replace('T',' ')).isoformat())
-    #         # to_go_response_1.append(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format).isoformat())
-    #     elif keys[i]=='token':
-    #         continue
-    #     else:
-    #         to_go_response_1.append(param.get(keys[i]))
-    #         print(param.get(keys[i]))
-    #
-    # if len(param.get('properties')):
-    #     for i in param.get('properties'):
-    #         to_go_response_1.append(i)
-    #
-    # data_1 = {"data": to_go_response_1}
-    # print("------------------------data1-------------------------------------")
-    # print(data_1)
-    # print(type(data_1))
-    # print("------------------------reult_3-------------------------------------")
-    # print(result_3)
-    # print(type(result_3))
-    # print("------------------------to_go_response_!-------------------------------------")
-    # print(to_go_response_1)
-    # print(type(to_go_response_1))
     data_2 = {key: value for key, value in param.items() if key != 'token'}
+    print(data_2)
     response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_2, headers=headers)
     # response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_1, headers=headers)
     response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
