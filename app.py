@@ -208,7 +208,9 @@ def togo():
     print("------------------------to_go_response_!-------------------------------------")
     print(to_go_response_1)
     print(type(to_go_response_1))
-    response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_1, headers=headers)
+    data_2 = {key: value for key, value in param.items() if key != 'token'}
+    response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_2, headers=headers)
+    # response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_1, headers=headers)
     response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
     print(type(response))
     # print(response)
