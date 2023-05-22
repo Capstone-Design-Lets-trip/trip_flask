@@ -182,20 +182,27 @@ def togo():
     # 드롭하려는 컬럼명을 리스트에 추가
     columns_to_drop = ["token"]
 
-    print(token)
+    to_go_response_1=[]
+
     for i in range(len(keys)):
-        if keys[i] == 'startDate' or keys[i] == 'endDate':
-            print(param[keys[i]])
-            print(type(param[keys[i]]))
-            param[keys[i]]=datetime.datetime.strptime(param.get(keys[i]).encode('utf-8').replace('T',' '),format)
-            print(param[keys[i]])
-            print(type(param[keys[i]]))
-            # to_return.append(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format))
+        if (keys[i]=='startDate' or keys[i]=='endDate'):
+            to_go_response_1.append(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format))
+            print(param.get(keys[i]).replace('T',' '))
+        elif (keys[i] == 'travel_start' or keys[i] == 'travel_end'):
+            continue
+        else:
+            to_go_response_1.append(param.get(keys[i]))
+            print(param.get(keys[i]))
+
+    if len(param.get('properties')):
+        for i in param.get('properties'):
+            to_go_response_1.append(i)
+
     # 원하는 컬럼 드롭
     for column in columns_to_drop:
-        param.pop(column, None)
-    print(param)
-    response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=param, headers=headers)
+        to_go_response_1.pop(column, None)
+    print(to_go_response_1)
+    response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=to_go_response_1, headers=headers)
     response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
     print(type(response))
     # print(response)
