@@ -74,36 +74,65 @@ def test_togo():
 def update_csv():
     param=request.get_json()
     print(param)
-    name=param.get('email')
-    attraction=param.get('name')
-    df=pd.read_csv("./member_info/"+name+".csv")
-    df.loc[df['Name'] == attraction, 'clicked'] += 1
-    df.to_csv("./member_info/"+name+".csv", index=False, mode='w')
-    re_box = Thompson_Sampling(name, attraction, reco=0, total_Osakak_df="./total_Osaka.csv")
-    return "Good"
+    if param['city'] == '오사카':
+        name=param.get('email')
+        attraction=param.get('name')
+        df=pd.read_csv("./member_info/"+name+".csv")
+        df.loc[df['Name'] == attraction, 'clicked'] += 1
+        df.to_csv("./member_info/"+name+".csv", index=False, mode='w')
+        re_box = Thompson_Sampling(name, attraction, reco=0, total_Osakak_df="./total_Osaka.csv")
+        return "Good"
+    else:
+        name = param.get('email')
+        attraction = param.get('name')
+        df = pd.read_csv("./member_info_dokyo/" + name + ".csv")
+        df.loc[df['Name'] == attraction, 'clicked'] += 1
+        df.to_csv("./member_info_dokyo/" + name + ".csv", index=False, mode='w')
+        re_box = Thompson_Sampling(name, attraction, reco=0, total_Osakak_df="./Dokyo.csv")
+        return "Good"
 
 @app.route('/to_update_scrap',methods=['POST'])
 def update_scrap_csv():
     param=request.get_json()
     print(param)
-    name=param.get('email')
-    attraction=param.get('name')
-    df=pd.read_csv("./member_info/"+name+".csv")
-    df.loc[df['Name'] == attraction, 'visit'] += 1 #이부분 콜럼명 바꾸기...
-    df.to_csv("./member_info/"+name+".csv", index=False)
-    re_box = Thompson_Sampling(name, attraction, reco=0, total_Osakak_df="./total_Osaka.csv")
-    return "Good"
+    if param['city']=='오사카':
+        name=param.get('email')
+        attraction=param.get('name')
+        df=pd.read_csv("./member_info/"+name+".csv")
+        df.loc[df['Name'] == attraction, 'visit'] += 1 #이부분 콜럼명 바꾸기...
+        df.to_csv("./member_info/"+name+".csv", index=False)
+        re_box = Thompson_Sampling(name, attraction, reco=0, total_Osakak_df="./total_Osaka.csv")
+        return "Good"
+    else:
+        name = param.get('email')
+        attraction = param.get('name')
+        df = pd.read_csv("./member_info_dokyo/" + name + ".csv")
+        df.loc[df['Name'] == attraction, 'visit'] += 1  # 이부분 콜럼명 바꾸기...
+        df.to_csv("./member_info_dokyo/" + name + ".csv", index=False)
+        re_box = Thompson_Sampling(name, attraction, reco=0, total_Osakak_df="./total_Dokyo.csv")
+        return "Good"
 
 @app.route('/togo_re', methods=['POST'])
 def generate_again():
     param = request.get_json()
-    start_time=datetime.datetime.strptime(param.get('startDate').replace('T',' '),format)
-    end_time=datetime.datetime.strptime(param.get('endDate').replace('T',' '),format)
-    name=param.get('email')
-    global sorted_total_clustering
-    TS_list = Thompson_Sampling('', '', reco=1, total_Osakak_df="./total_Osaka.csv")
-    result_2 = make_att_list_by_TS(sorted_total_clustering, TS_list, path="./total_Osaka.csv")
-    result_3 = attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.get('travel_start'),param.get('travel_end'))
+    if param['city']=='오사카':
+        start_time=datetime.datetime.strptime(param.get('startDate').replace('T',' '),format)
+        end_time=datetime.datetime.strptime(param.get('endDate').replace('T',' '),format)
+        name=param.get('email')
+        global sorted_total_clustering
+        TS_list = Thompson_Sampling('', '', reco=1, total_Osakak_df="./total_Osaka.csv")
+        result_2 = make_att_list_by_TS(sorted_total_clustering, TS_list, path="./total_Osaka.csv")
+        result_3 = attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.get('travel_start'),param.get('travel_end'))
+    else:
+        start_time = datetime.datetime.strptime(param.get('startDate').replace('T', ' '), format)
+        end_time = datetime.datetime.strptime(param.get('endDate').replace('T', ' '), format)
+        name = param.get('email')
+        global sorted_total_clustering
+        TS_list = Thompson_Sampling('', '', reco=1, total_Osakak_df="./total_Dokyo.csv")
+        result_2 = make_att_list_by_TS(sorted_total_clustering, TS_list, path="./total_Dokyo.csv.csv")
+        result_3 = attraction_route_recommend(result_2, start_time, end_time, './Tokyo_time.csv', './User_df.csv',
+                                              './total_Dokyo.csv', param.get('travel_start'), param.get('travel_end'))
+
 
 
 @app.route('/togo', methods=['POST'])
@@ -117,8 +146,12 @@ def togo():
     # src_path = 'User_df.csv'
     # dst_path = './member_info/{}.csv'.format(name)
     # shutil.copy(src_path, dst_path)
-    if not os.path.isfile("./member_info/"+name+".csv"):
-        os.system("sudo cp User_df.csv ./member_info/" + name + ".csv")
+    if param['city']=='오사카':
+        if not os.path.isfile("./member_info/"+name+".csv"):
+            os.system("sudo cp User_df.csv ./member_info/" + name + ".csv")
+    if param['city']=='도쿄':
+        if not os.path.isfile("./member_info_dokyo/"+name+".csv"):
+            os.system("sudo cp User_df.csv ./member_info_dokyo/" + name + ".csv")
 
     keys=list(param.keys())
     format = '%Y-%m-%d %H:%M'
@@ -161,28 +194,17 @@ def togo():
     start_time=datetime.datetime.strptime(param.get('startDate').replace('T',' '),format)
     end_time=datetime.datetime.strptime(param.get('endDate').replace('T',' '),format)
     result_1=att_recommend(input_keyword = str(dup))
-    result_2=choose_attraction(result_1,'./total_Osaka.csv')
-    result_3=attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.get('travel_start'),param.get('travel_end'))
+    if param['city']=='오사카':
+        result_2=choose_attraction(result_1,'./total_Osaka.csv')
+        result_3=attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.get('travel_start'),param.get('travel_end'))
+    else:
+        result_2 = choose_attraction(result_1, './total_Dokyo.csv')
+        result_3 = attraction_route_recommend(result_2, start_time, end_time, './Tokyo_time.csv', './User_df.csv',
+                                              './total_Dokyo.csv', param.get('travel_start'), param.get('travel_end'))
     print(result_1)
     print(result_2)
     print(result_3)
 
-    # token = param["token"]  # 예시로 token 값을 추출
-    # # 요청 헤더에 토큰 추가
-    # headers = {
-    #     "Authorization": f"Bearer {token}",
-    #     "Content-Type": "application/json; charset=utf-8"
-    # }
-    #
-    # data_2 = {key: value for key, value in param.items() if key != 'token'}
-    # # data_2 = {key: value.replace("'", "") for key, value in param.items() if key != 'token'}
-    #
-    # print("----------------------data_2------------------------")
-    # print(data_2)
-    # response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_2, headers=headers)
-    # response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_2)
-    # print(response_1)
-    # response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_1, headers=headers)
     response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
     print(type(response))
     # print(response)
