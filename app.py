@@ -196,7 +196,15 @@ def togo():
             to_go_response_1.append(i)
 
     data_1 = {"data": to_go_response_1}
+    print("------------------------data1-------------------------------------")
+    print(data_1)
+    print(type(data_1))
+    print("------------------------reult_3-------------------------------------")
+    print(result_3)
+    print(type(result_3))
+    print("------------------------to_go_response_!-------------------------------------")
     print(to_go_response_1)
+    print(type(to_go_response_1))
     response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_1, headers=headers)
     response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
     print(type(response))
