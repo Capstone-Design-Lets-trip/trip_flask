@@ -179,7 +179,7 @@ def togo():
     headers = {
         "Authorization": "Bearer " + token
     }
-    response = requests.get("http://letstrip.shop:8080/tour/course/to_save_survey", param=param, headers=headers)
+    response = requests.get("http://letstrip.shop:8080/tour/course/to_save_survey", params=param, headers=headers)
     response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
     print(type(response))
     # print(response)
