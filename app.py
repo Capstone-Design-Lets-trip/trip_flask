@@ -184,6 +184,10 @@ def togo():
 
     print(token)
     # 원하는 컬럼 드롭
+    for i in range(len(keys)):
+        if (keys[i]=='startDate' or keys[i]=='endDate'):
+            param[keys[i]]=datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format)
+            # to_return.append(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format))
     for column in columns_to_drop:
         param.pop(column, None)
     print(param)
