@@ -183,15 +183,19 @@ def togo():
     columns_to_drop = ["token"]
 
     print(token)
-    # 원하는 컬럼 드롭
     for i in range(len(keys)):
-        if (keys[i]=='startDate' or keys[i]=='endDate'):
-            param[keys[i]]=datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format)
+        if keys[i] == 'startDate' or keys[i] == 'endDate':
+            print(param[keys[i]])
+            print(type(param[keys[i]]))
+            param[keys[i]]=datetime.datetime.strptime(param.get(keys[i]).encode('utf-8').replace('T',' '),format)
+            print(param[keys[i]])
+            print(type(param[keys[i]]))
             # to_return.append(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format))
+    # 원하는 컬럼 드롭
     for column in columns_to_drop:
         param.pop(column, None)
     print(param)
-    response_1 = requests.post("http://letstrip.shop:8080/survey/save", data=param, headers=headers)
+    response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=param, headers=headers)
     response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
     print(type(response))
     # print(response)
