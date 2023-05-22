@@ -175,8 +175,8 @@ def togo():
 
     print("----------------------data_2------------------------")
     print(data_2)
-    # response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_2, headers=headers)
-    response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_2)
+    response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_2, headers=headers)
+    # response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_2)
     print(response_1)
     # response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_1, headers=headers)
     response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
