@@ -185,7 +185,9 @@ def togo():
     to_go_response_1=[]
 
     for i in range(len(keys)):
-        if keys[i]=='token':
+        if (keys[i]=='startDate' or keys[i]=='endDate'):
+            to_go_response_1.append(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format))
+        elif keys[i]=='token':
             continue
         else:
             to_go_response_1.append(param.get(keys[i]))
