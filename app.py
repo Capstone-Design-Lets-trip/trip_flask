@@ -177,7 +177,7 @@ def togo():
     token = param["token"]  # 예시로 token 값을 추출
     # 요청 헤더에 토큰 추가
     headers = {
-        "Authorization": "Bearer " + token
+        "Authorization": "Bearer {토큰값}"
     }
     # 드롭하려는 컬럼명을 리스트에 추가
     columns_to_drop = ["token"]
