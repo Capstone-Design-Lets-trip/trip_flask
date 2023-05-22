@@ -173,7 +173,14 @@ def togo():
     #     print(type(i))
     #     print(i)
     #print(json.loads(json.dumps(result_3)))
-    response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
+
+    token = param["token"]  # 예시로 token 값을 추출
+    # 요청 헤더에 토큰 추가
+    headers = {
+        "Authorization": "Bearer " + token
+    }
+    # response = requests.get("http://letstrip.shop:8080/tour/course/to_save_survey", json=result_3)
+    response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3, headers=headers)
     print(type(response))
     # print(response)
     print(response.text)
