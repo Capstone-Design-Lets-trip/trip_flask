@@ -122,6 +122,9 @@ def togo():
 
     keys=list(param.keys())
     format = '%Y-%m-%d %H:%M'
+    for i in range(len(keys)):
+        print(keys[i])
+        print(param.get(keys[i]))
     for i in range(len(keys) - 4):
         if (keys[i]=='startDate' or keys[i]=='endDate'):
             to_return.append(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format))
@@ -163,21 +166,21 @@ def togo():
     print(result_2)
     print(result_3)
 
-    token = param["token"]  # 예시로 token 값을 추출
-    # 요청 헤더에 토큰 추가
-    headers = {
-        "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json; charset=utf-8"
-    }
-
-    data_2 = {key: value for key, value in param.items() if key != 'token'}
-    # data_2 = {key: value.replace("'", "") for key, value in param.items() if key != 'token'}
-
-    print("----------------------data_2------------------------")
-    print(data_2)
-    response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_2, headers=headers)
+    # token = param["token"]  # 예시로 token 값을 추출
+    # # 요청 헤더에 토큰 추가
+    # headers = {
+    #     "Authorization": f"Bearer {token}",
+    #     "Content-Type": "application/json; charset=utf-8"
+    # }
+    #
+    # data_2 = {key: value for key, value in param.items() if key != 'token'}
+    # # data_2 = {key: value.replace("'", "") for key, value in param.items() if key != 'token'}
+    #
+    # print("----------------------data_2------------------------")
+    # print(data_2)
+    # response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_2, headers=headers)
     # response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_2)
-    print(response_1)
+    # print(response_1)
     # response_1 = requests.post("http://letstrip.shop:8080/survey/save", json=data_1, headers=headers)
     response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
     print(type(response))
