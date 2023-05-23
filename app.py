@@ -37,7 +37,7 @@ def update_csv():
         df = pd.read_csv("./member_info_dokyo/" + name + ".csv")
         df.loc[df['Name'] == attraction, 'clicked'] += 1
         df.to_csv("./member_info_dokyo/" + name + ".csv", index=False, mode='w')
-        re_box = Thompson_Sampling(name, attraction, reco=0, total_Osakak_df="./Dokyo.csv")
+        re_box = Thompson_Sampling(name, attraction, reco=0, total_Osakak_df="./total_Dokyo.csv")
         return "Good"
 
 @app.route('/to_update_scrap',methods=['POST'])
