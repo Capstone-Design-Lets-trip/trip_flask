@@ -19,57 +19,6 @@ sorted_total_clustering=''
 app = Flask(__name__)
 CORS(app)  # 모든 origin에 대해 CORS를 허용합니다.
 
-@app.route("/check")
-def check():
-    return "checkcheck", 200
-
-@app.route('/hello_world') #test api
-def hello_world():
-    return 'Hello, World!', 200
-
-@app.route('/echo_call', methods=['POST']) #post echo api
-def post_echo_call():
-    param = request.get_json()
-    print("[GET] done")
-    print(param.get('id'))
-    print(param.get('password'))
-    print(param.get('mood'))
-
-    return jsonify(param), 200
-
-@app.route('/test_model',methods=['GET'])
-def test_model():
-    result_1=att_recommend('한큐백화점')
-    result_2=choose_attraction(result_1,'./total_Osaka.csv')
-    print(result_2)
-    return "BAD"
-    # return json.loads(),200
-
-@app.route('/test_togo',methods=['POST'])
-def test_togo():
-    param=request.get_json()
-    keys = list(param.keys())
-    format = '%Y-%m-%d %H:%M'
-    for i in range(len(keys) - 1):
-        if (keys[i]=='startDate' or keys[i]=='endDate'):
-            print('datetime이다아아아아앙')
-            a=param.get(keys[i]).replace('T',' ')
-            print(type(a))
-            print(datetime.datetime.strptime(a,format))
-            print(type(datetime.datetime.strptime(param.get(keys[i]).replace('T',' '),format)))
-        else:
-            print(param.get(keys[i]))
-        # print(param.get(keys[i]))
-        print(type(param.get(keys[i])))
-    return 200;
-
-# @app.route('', methods=['POST'])
-# def generate_csv():
-#     param=request.get_json()
-#     name=param.get('email')
-#     base=pd.read_csv("User_df.csv")
-#     base.to_csv("./member_info/"+name+".csv",index=False)
-
 @app.route('/to_update',methods=['POST'])
 def update_csv():
     param=request.get_json()
@@ -115,11 +64,12 @@ def update_scrap_csv():
 @app.route('/togo_re', methods=['POST'])
 def generate_again():
     param = request.get_json()
+    global sorted_total_clustering
+
     if param['city']=='오사카':
         start_time=datetime.datetime.strptime(param.get('startDate').replace('T',' '),format)
         end_time=datetime.datetime.strptime(param.get('endDate').replace('T',' '),format)
         name=param.get('email')
-        global sorted_total_clustering
         TS_list = Thompson_Sampling('', '', reco=1, total_Osakak_df="./total_Osaka.csv")
         result_2 = make_att_list_by_TS(sorted_total_clustering, TS_list, path="./total_Osaka.csv")
         result_3 = attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.get('travel_start'),param.get('travel_end'))
@@ -127,7 +77,6 @@ def generate_again():
         start_time = datetime.datetime.strptime(param.get('startDate').replace('T', ' '), format)
         end_time = datetime.datetime.strptime(param.get('endDate').replace('T', ' '), format)
         name = param.get('email')
-        global sorted_total_clustering
         TS_list = Thompson_Sampling('', '', reco=1, total_Osakak_df="./total_Dokyo.csv")
         result_2 = make_att_list_by_TS(sorted_total_clustering, TS_list, path="./total_Dokyo.csv.csv")
         result_3 = attraction_route_recommend(result_2, start_time, end_time, './Tokyo_time.csv', './User_df.csv',
