@@ -105,7 +105,7 @@ def insert_one(con, id, one_data):
 
 def check_id_exists(con, id):
     cursor_db = con.cursor()
-    cursor_db.execute("SELECT EXISTS(SELECT 1 FROM checkup WHERE id = ?)", (id,))
+    cursor_db.execute("SELECT EXISTS(SELECT * FROM checkup WHERE id = ?)", (id,))
     result = cursor_db.fetchone()[0]
     return bool(result)
 
