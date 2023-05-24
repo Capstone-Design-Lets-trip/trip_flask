@@ -387,7 +387,7 @@ def is_travel_available(go_out_time, go_in_time, input_time):
     print(input_time.hour)
     print("is_travel에 들어옴_3")
 
-    if go_out_hour > go_in_hour or input_time.hour > go_in_hour or go_out_hour > 19 or go_in_hour < 23 or input_time.hour > 19:
+    if go_out_hour > go_in_hour or input_time.hour > go_in_hour or go_out_hour > 19 or go_in_hour > 23 or input_time.hour > 19:
         return 'Nan'
 
     else:
