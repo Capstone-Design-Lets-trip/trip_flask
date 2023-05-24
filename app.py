@@ -98,6 +98,7 @@ def update_scrap_csv():
 
 @app.route('/test_re_final', methods=['GET'])
 def generate_again():
+    format = '%Y-%m-%d %H:%M'
     #원래 이렇게 받으려 했어요
     param_1 = request.get_json()
     headers = {'Content-Type': 'application/json'}
