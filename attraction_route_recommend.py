@@ -28,10 +28,11 @@ def find_time(dataframe, origins, destinations):
 
 
 def set_start_point(day_visit, df, lastpoint, addressList, city):
+    search_name=''
     if day_visit == 1:
-        if city == 'Osaka':
+        if city == '도쿄':
             search_name = '간사이 공항'
-        if city == 'Dokyo':
+        if city == '오사카':
             search_name = '하네다국제공항'
 
     else:
