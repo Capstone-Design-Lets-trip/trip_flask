@@ -110,6 +110,9 @@ def choose_attraction(input = '', path = '', city='', name=''):
       final_att_list.append(df.Name[index])
 
   box = pd.Series(sorted_total_clustering_box)
+  print('./clustering_'+city+'/'+name+'_sorted'+'.csv')
+  print(city)
+  print(name)
   box.to_csv('./clustering_'+city+'/'+name+'_sorted'+'.csv')
 
   return final_att_list
