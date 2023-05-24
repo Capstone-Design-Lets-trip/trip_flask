@@ -131,7 +131,7 @@ def generate_again():
         TS_list = Thompson_Sampling(name, '', reco=1, total_Osakak_df="./total_Osaka.csv",city='오사카',user_df_path="./member_info/"+param.json().get('email')+".csv")
         print(TS_list)
         result_2 = make_att_list_by_TS(TS_list, path="./total_Osaka.csv", user_df_path="./member_info/"+name+".csv", city=param.json().get('city'), name=param.json().get('email'))
-        result_3 = attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.json().get('travel_start'),param.json().get('travel_end'),param.json().get('city'),param.json().get('email'))
+        result_3 = attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.json().get('travel_start'),param.json().get('travel_end'),param.json().get('city'))
         response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
         return response.text
     else:
@@ -141,7 +141,7 @@ def generate_again():
         TS_list = Thompson_Sampling(name, '', reco=1, total_Osakak_df="./total_Dokyo.csv",city='도쿄',user_df_path="./member_info_dokyo/" + param.json().get('email') + ".csv")
         result_2 = make_att_list_by_TS(TS_list, path="./total_Dokyo.csv.csv",user_df_path="./member_info_dokyo/"+name+".csv", city=param.json().get('city'), name=param.json().get('email'))
         result_3 = attraction_route_recommend(result_2, start_time, end_time, './Tokyo_time.csv', './User_df.csv',
-                                              './total_Dokyo.csv', param.json().get('travel_start'), param.json().get('travel_end'),param.json().get('city'),param.json().get('email'))
+                                              './total_Dokyo.csv', param.json().get('travel_start'), param.json().get('travel_end'),param.json().get('city'))
         response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
         return response.text
 
