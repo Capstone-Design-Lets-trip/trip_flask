@@ -115,23 +115,23 @@ def generate_again():
     global sorted_total_clustering
 
     # if param['city']=='오사카':
-    if param.get('city') == '오사카':
-        start_time=datetime.datetime.strptime(param.get('startDate').replace('T',' '),format)
-        end_time=datetime.datetime.strptime(param.get('endDate').replace('T',' '),format)
-        name=param.get('email')
+    if param.json().get('city') == '오사카':
+        start_time=datetime.datetime.strptime(param.json().get('startDate').replace('T',' '),format)
+        end_time=datetime.datetime.strptime(param.json().get('endDate').replace('T',' '),format)
+        name=param.json().get('email')
         TS_list = Thompson_Sampling('', '', reco=1, total_Osakak_df="./total_Osaka.csv")
         result_2 = make_att_list_by_TS(sorted_total_clustering, TS_list, path="./total_Osaka.csv")
-        result_3 = attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.get('travel_start'),param.get('travel_end'))
+        result_3 = attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.json().get('travel_start'),param.json().get('travel_end'))
         response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
         return response.text
     else:
-        start_time = datetime.datetime.strptime(param.get('startDate').replace('T', ' '), format)
-        end_time = datetime.datetime.strptime(param.get('endDate').replace('T', ' '), format)
-        name = param.get('email')
+        start_time = datetime.datetime.strptime(param.json().get('startDate').replace('T', ' '), format)
+        end_time = datetime.datetime.strptime(param.json().get('endDate').replace('T', ' '), format)
+        name = param.json().get('email')
         TS_list = Thompson_Sampling('', '', reco=1, total_Osakak_df="./total_Dokyo.csv")
         result_2 = make_att_list_by_TS(sorted_total_clustering, TS_list, path="./total_Dokyo.csv.csv")
         result_3 = attraction_route_recommend(result_2, start_time, end_time, './Tokyo_time.csv', './User_df.csv',
-                                              './total_Dokyo.csv', param.get('travel_start'), param.get('travel_end'))
+                                              './total_Dokyo.csv', param.json().get('travel_start'), param.json().get('travel_end'))
         response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
         return response.text
 
