@@ -109,7 +109,7 @@ def generate_again():
         "city": city,
         "email": email
     }
-    param = request.get('/survey/all',data=json.dumps(data))
+    param = requests.get('/survey/all',data=json.dumps(data))
     print('-------------togo_re_param----------')
     print(param)
     global sorted_total_clustering
