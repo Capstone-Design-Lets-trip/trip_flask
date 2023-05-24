@@ -173,6 +173,7 @@ def Thompson_Sampling(user_id = '', click_item = '', reco = '', total_Osakak_df 
         con = connection(user_id)
     else:
         con = connection_dokyo(user_id)
+    print(user_id)
     exists = check_id_exists(con, user_id)
     if not exists:
         user_models[user_id] = ThompsonSampling(len(df.cluster.unique()))  # len(df.cluster.unique()) 객체형성할때 필수값
