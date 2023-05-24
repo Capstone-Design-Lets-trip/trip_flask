@@ -379,6 +379,9 @@ def get_suggested_count(user_df):
 def is_travel_available(go_out_time, go_in_time, input_time):
     go_out_hour = int(go_out_time[:2])
     go_in_hour = int(go_in_time[:2])
+    print(go_out_hour)
+    print(go_in_hour)
+    print(input_time.hour)
 
     if go_out_hour > go_in_hour or input_time.hour > go_in_hour or go_out_hour > 19 or go_in_hour < 23 or input_time.hour > 19:
         return 'Nan'
