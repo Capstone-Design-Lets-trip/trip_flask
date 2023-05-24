@@ -406,7 +406,7 @@ class TouristAttraction:
 
 
 def attraction_route_recommend(input='', input_time='', finish_times='', Osaka_time_path='', User_df_path='',
-                               total_Osaka_path='', go_out_time='', go_in_time='', city = ''):
+                               total_Osaka_path='', go_out_time='', go_in_time='', city = '', name_2=''):
     check = is_travel_available(go_out_time, go_in_time, input_time)
     if check is 'Nan':
         return 'Nan'
@@ -542,5 +542,9 @@ def attraction_route_recommend(input='', input_time='', finish_times='', Osaka_t
         input_time += dt.timedelta(days=1)
         input_time = input_time.replace(hour=int(go_out_time[:2]), minute=int(go_out_time[-2:]))
         attrList = []
+    if city=='오사카':
+        user_df.to_csv("./member_info/"+name_2+".csv",index=False)
+    else:
+        user_df.to_csv("./member_info_dokyo/"+name_2+".csv",index=False)
 
     return empty_list
