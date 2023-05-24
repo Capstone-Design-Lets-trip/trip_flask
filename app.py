@@ -100,7 +100,7 @@ def update_scrap_csv():
 def generate_again():
     #원래 이렇게 받으려 했어요
     param_1 = request.get_json()
-
+    headers = {'Content-Type': 'application/json'}
     #이렇게 고칠게요
     city = param_1.get('city')
     email = param_1.get('email')
@@ -109,7 +109,7 @@ def generate_again():
         "city": city,
         "email": email
     }
-    param = requests.get('http://letstrip.shop:8080/survey/all',data=json.dumps(data))
+    param = requests.get('http://letstrip.shop:8080/survey/all',data=json.dumps(data),headers=headers)
     print('-------------togo_re_param----------')
     print(param)
     global sorted_total_clustering
