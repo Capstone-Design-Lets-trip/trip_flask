@@ -76,18 +76,6 @@ def connection(name=''):
     except Error:
         print(Error)
 
-def connection_dokyo(name=''):
-    try:
-        print("try로 들어옴??")
-        con = sqlite3.connect('./db_dokyo/'+name+'.db')
-        if not con:
-            os.system('touch '+'./db_dokyo/'+name+'.db')
-            con = sqlite3.connect('./db_dokyo/'+name+'.db')
-            create_table(con)
-        return con
-    except Error:
-        print(Error)
-
 
 def create_table(con):
     cursor_db = con.cursor()
@@ -105,7 +93,7 @@ def insert_one(con, id, one_data):
 
 def check_id_exists(con, id):
     cursor_db = con.cursor()
-    cursor_db.execute("SELECT EXISTS(SELECT * FROM checkup WHERE id = ?)", (id,))
+    cursor_db.execute("SELECT EXISTS(SELECT 1 FROM checkup WHERE id = ?)", (id,))
     result = cursor_db.fetchone()[0]
     return bool(result)
 
@@ -146,14 +134,10 @@ def update_one(con, recommender, user_id):
     con.commit()
 
 
-def Thompson_Sampling(user_id = '', click_item = '', reco = '', total_Osakak_df = '', city='', user_df_path=''):
+def Thompson_Sampling(user_id = '', click_item = '', reco = '', total_Osakak_df = ''):
     df = pd.read_csv(total_Osakak_df)
     cluster_unique = make_cluster_unique(df)
-    user_df=pd.read_csv(user_df_path)
-    index_boxes = user_df[user_df['candidate'] == 1].index
-    candidate = []
-    for indexes in index_boxes:
-        candidate.append(df.Name[indexes])
+
     # 만들어지는 곳
     user_models = {}
     # con = mysql.connector.connect(
@@ -169,14 +153,7 @@ def Thompson_Sampling(user_id = '', click_item = '', reco = '', total_Osakak_df 
     print("여기들어옴?")
     print("여기들어옴?")
     print(user_id)
-    print(city)
-    if city=='오사카':
-        print("in 오사카")
-        con = connection(user_id)
-    else:
-        print("in 도쿄")
-        con = connection_dokyo(user_id)
-    print(user_id)
+    con = connection(user_id)
     exists = check_id_exists(con, user_id)
     if not exists:
         user_models[user_id] = ThompsonSampling(len(df.cluster.unique()))  # len(df.cluster.unique()) 객체형성할때 필수값
@@ -203,16 +180,15 @@ def Thompson_Sampling(user_id = '', click_item = '', reco = '', total_Osakak_df 
         click_item = int(find_clustering_index(df, click_item))
 
         recommender = user_models[user_id]
-        for attraction in candidate:
-            attraction = int(find_clustering_index(df, attraction))
-            if click_item == attraction:
-                reward = 1
-                recommender.update(click_item, reward)
-            else:
-                reward = 0
-                recommender.update(attraction, reward)
+        recommended_item, _ = recommender.recommend()
+        reward = int(click_item == recommended_item)
+        recommender.update(recommended_item, reward)
         update_one(con, recommender, user_id)
         print("모델이 갱신되었습니다.")
+
+
+        # with open('TS_user_models.p', 'wb') as file:
+        #     pickle.dump(user_models, file)
 
         return 'Nan'
 
