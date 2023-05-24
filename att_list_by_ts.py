@@ -57,7 +57,7 @@ def make_att_list_by_TS(TS_list='', path='', user_df_path='',city='',name=''):
   final_att_list = []
   print(att_index)
   for i in range(end):
-    for index in att_index[sorted_total_clustering_box[:][i][0]]:
+    for index in att_index[sorted_total_clustering_box[i]]:
       final_att_list.append(df.Name[index])
 
   for choiced in choice_list:
