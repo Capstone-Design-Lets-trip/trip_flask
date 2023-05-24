@@ -109,7 +109,7 @@ def generate_again():
         "city": city,
         "email": email
     }
-    param = requests.get('http://letstrip.shop:8080/survey/all',data=json.dumps(data),headers=headers)
+    param = requests.get('http://letstrip.shop:8080/survey/all',params=json.dumps(data),headers=headers)
     print('-------------togo_re_param----------')
     print(param)
     global sorted_total_clustering
