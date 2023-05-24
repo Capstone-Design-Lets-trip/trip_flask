@@ -27,9 +27,12 @@ def find_time(dataframe, origins, destinations):
     return dataframe.cost[intersection[0]]
 
 
-def set_start_point(day_visit, df, lastpoint, addressList):
+def set_start_point(day_visit, df, lastpoint, addressList, city):
     if day_visit == 1:
-        search_name = '간사이 공항'
+        if city == 'Osaka':
+            search_name = '간사이 공항'
+        if city == 'Dokyo':
+            search_name = '하네다국제공항'
 
     else:
         search_name = lastpoint
@@ -373,6 +376,15 @@ def get_suggested_count(user_df):
     else:
         return box.count(1)
 
+def is_travel_available(go_out_time, go_in_time, input_time):
+    go_out_hour = int(go_out_time[:2])
+    go_in_hour = int(go_in_time[:2])
+
+    if go_out_hour > go_in_hour or input_time.hour > go_in_hour or go_out_hour > 19 or go_in_hour < 23 or input_time.hour > 19:
+        return 'Nan'
+
+    else:
+        return 'good'
 
 class TouristAttraction:
     def __init__(self, name, address, stayTime):
@@ -385,9 +397,12 @@ class TouristAttraction:
 
 
 def attraction_route_recommend(input='', input_time='', finish_times='', Osaka_time_path='', User_df_path='',
-                               total_Osaka_path='', go_out_time='', go_in_time=''):
+                               total_Osaka_path='', go_out_time='', go_in_time='', city = ''):
+    check = is_travel_available(go_out_time, go_in_time, input_time)
+    if check is 'Nan':
+        return 'Nan'
+
     path_df = pd.read_csv(Osaka_time_path)
-    path_df.columns = ['origins', 'destinations', 'cost']
     user_df = pd.read_csv(User_df_path)
     df = pd.read_csv(total_Osaka_path)
 
@@ -403,40 +418,17 @@ def attraction_route_recommend(input='', input_time='', finish_times='', Osaka_t
     temp_box = list(input_df.cluster)
     temp_box = [int(num) for num in temp_box]
 
-    # total_boxes = []
-    # jubox = []
-    #
-    # jubox.append(input_df.Name[0])
-    # for i in range(1, len(temp_box)):
-    #     if temp_box[i - 1] != temp_box[i]:
-    #         total_boxes.append(jubox)
-    #         jubox = []
-    #         jubox.append(input_df.Name[i])
-    #     else:
-    #         jubox.append(input_df.Name[i])
-    #
-    tmp_total_boxes = {}
+    total_boxes = []
     jubox = []
 
     jubox.append(input_df.Name[0])
     for i in range(1, len(temp_box)):
         if temp_box[i - 1] != temp_box[i]:
-            if temp_box[i - 1] in tmp_total_boxes:
-                tmp_total_boxes[temp_box[i - 1]].extend(jubox)
-            else:
-                tmp_total_boxes[temp_box[i - 1]] = jubox
+            total_boxes.append(jubox)
             jubox = []
             jubox.append(input_df.Name[i])
         else:
             jubox.append(input_df.Name[i])
-
-        if i == len(temp_box) - 1:
-            if temp_box[i] in tmp_total_boxes:
-                tmp_total_boxes[temp_box[i]].extend(jubox)
-            else:
-                tmp_total_boxes[temp_box[i]] = jubox
-
-    total_boxes = list(tmp_total_boxes.values())
 
     addressList = list(df['Address'])
 
@@ -452,7 +444,6 @@ def attraction_route_recommend(input='', input_time='', finish_times='', Osaka_t
     for day in range(1, total_travel_days):
         travel_time = 0
         allocationTime = ((input_time.replace(hour=int(go_in_time[:2]), minute=int(go_in_time[-2:])) - input_time) / 60).seconds
-        print(allocationTime)
         move_time = 30
 
         for i in range(len(total_boxes)):
@@ -465,7 +456,7 @@ def attraction_route_recommend(input='', input_time='', finish_times='', Osaka_t
             if travel_time > allocationTime:
                 break
 
-        startPoint = set_start_point(first_day_visit, df, lastpoint, addressList)
+        startPoint = set_start_point(first_day_visit, df, lastpoint, addressList, city)
 
         totalList = [startPoint]
         totalList.extend(attrList)
