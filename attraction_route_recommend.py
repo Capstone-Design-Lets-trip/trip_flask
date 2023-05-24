@@ -18,6 +18,7 @@ from copy import deepcopy
 pd.set_option('mode.chained_assignment',  None)
 
 def find_index(dataframe, Name):
+    print(Name)
     return dataframe[dataframe.Name == Name].index[0]
 
 
