@@ -9,7 +9,9 @@ Original file is located at
 
 import pandas as pd
 
-def make_att_list_by_TS(sorted_total_clustering_box='', TS_list='', path='', user_df_path=''):
+def make_att_list_by_TS(TS_list='', path='', user_df_path='',city='',name=''):
+  tmp =pd.read_csv('./clustering_'+city+'/'+name+'_sorted'+'.csv')
+  sorted_total_clustering_box = list(tmp)
   user_df = pd.read_csv(user_df_path)
   score_box = {}
   score = 15
