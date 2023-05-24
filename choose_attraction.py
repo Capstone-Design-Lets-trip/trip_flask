@@ -87,9 +87,7 @@ def choose_attraction(input = '', path = '', city='', user=''):
   indexbox = []
   clusterbox = []
 
-  print(input)
   for name in input:
-    print(name)
     ind = df[df.Name == name].index[0]
     indexbox.append(ind)
     clusterbox.append(df.cluster[ind])

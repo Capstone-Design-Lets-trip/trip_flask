@@ -205,11 +205,13 @@ def togo():
 
     start_time=datetime.datetime.strptime(param.get('startDate').replace('T',' '),format)
     end_time=datetime.datetime.strptime(param.get('endDate').replace('T',' '),format)
-    result_1=att_recommend(input_keyword = str(dup))
+
     if param['city']=='오사카':
+        result_1 = att_recommend(path='./total_Osaka.csv',input_keyword=str(dup))
         result_2=choose_attraction(result_1,'./total_Osaka.csv','오사카',name)
         result_3=attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.get('travel_start'),param.get('travel_end'),param.get('city'),param.get('email'))
     else:
+        result_1 = att_recommend(path='./total_Dokyo.csv',input_keyword=str(dup))
         result_2 = choose_attraction(result_1, './total_Dokyo.csv','도쿄',name)
         result_3 = attraction_route_recommend(result_2, start_time, end_time, './Tokyo_time.csv', './User_df_Dokyo.csv',
                                               './total_Dokyo.csv', param.get('travel_start'), param.get('travel_end'),param.get('city'),param.get('email'))
