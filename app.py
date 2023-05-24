@@ -117,11 +117,11 @@ def generate_again():
 
     # if param['city']=='오사카':
     if param.json().get('city') == '오사카':
-        tmp_csv=pd.read_csv("./member_info/"+param.json().get('email')+".csv",index=False)
+        tmp_csv=pd.read_csv("./member_info/"+param.json().get('email')+".csv")
         tmp_csv['candidate']=0
         tmp_csv.to_csv("./member_info/"+param.json().get('email')+".csv",index=False)
     else:
-        tmp_csv = pd.read_csv("./member_info_dokyo/" + param.json().get('email') + ".csv", index=False)
+        tmp_csv = pd.read_csv("./member_info_dokyo/" + param.json().get('email') + ".csv")
         tmp_csv['candidate'] = 0
         tmp_csv.to_csv("./member_info_dokyo/" + param.json().get('email') + ".csv", index=False)
     if param.json().get('city') == '오사카':
