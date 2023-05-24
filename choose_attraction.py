@@ -67,7 +67,7 @@ Original file is located at
 import numpy as np
 import pandas as pd
 
-def choose_attraction(input = '', path = '', city='', name=''):
+def choose_attraction(input = '', path = '', city='', user=''):
   df = pd.read_csv(path)
   end = len(df.cluster.unique())
   att_index = []
@@ -110,9 +110,9 @@ def choose_attraction(input = '', path = '', city='', name=''):
       final_att_list.append(df.Name[index])
 
   box = pd.Series(sorted_total_clustering_box)
-  print('./clustering_'+city+'/'+name+'_sorted'+'.csv')
+  print('./clustering_'+city+'/'+user+'_sorted'+'.csv')
   print(city)
-  print(name)
-  box.to_csv('./clustering_'+city+'/'+name+'_sorted'+'.csv')
+  print(user)
+  box.to_csv('./clustering_'+city+'/'+user+'_sorted'+'.csv')
 
   return final_att_list
