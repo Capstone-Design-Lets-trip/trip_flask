@@ -81,6 +81,7 @@ def connection_dokyo(name=''):
     try:
         print("try로 들어옴??")
         con = sqlite3.connect('./db_dokyo/'+name+'.db')
+        create_table(con)
         if not con:
             os.system('touch '+'./db_dokyo/'+name+'.db')
             con = sqlite3.connect('./db_dokyo/'+name+'.db')
