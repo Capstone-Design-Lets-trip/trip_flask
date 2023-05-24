@@ -114,7 +114,8 @@ def generate_again():
     print(param)
     global sorted_total_clustering
 
-    if param['city']=='오사카':
+    # if param['city']=='오사카':
+    if param.get('city') == '오사카':
         start_time=datetime.datetime.strptime(param.get('startDate').replace('T',' '),format)
         end_time=datetime.datetime.strptime(param.get('endDate').replace('T',' '),format)
         name=param.get('email')
