@@ -13,8 +13,13 @@ def make_att_list_by_TS(TS_list='', path='', user_df_path='',city='',name=''):
   print(city)
   print(name)
   tmp =pd.read_csv('./clustering_'+city+'/'+name+'_sorted'+'.csv')
-  sorted_total_clustering_box = list(tmp)
+  tmp_box = list(tmp['0'])
+  sorted_total_clustering_box = []
+
+  for i in range(len(tmp_box)):
+    sorted_total_clustering_box.append(int(tmp_box[i].split(',')[0][1:]))
   print(sorted_total_clustering_box)
+
   user_df = pd.read_csv(user_df_path)
   score_box = {}
   score = 15
@@ -31,7 +36,7 @@ def make_att_list_by_TS(TS_list='', path='', user_df_path='',city='',name=''):
       choice_list.append(user_df['Name'][i])
 
   for item in sorted_total_clustering_box:
-    score_box[item[0]] = score
+    score_box[item] = score
     score -= 1
 
   print(score_box)
