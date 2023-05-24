@@ -142,7 +142,6 @@ def generate_again():
 def togo():
     to_return=[]
     param = request.get_json()
-    return param
     print(param)
     name=param.get('email')
     con = connection(name)
