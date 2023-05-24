@@ -67,12 +67,13 @@ class ThompsonSampling:
 def connection(name=''):
     try:
         print("try로 들어옴??")
-        con = sqlite3.connect('./db/'+name+'.db')
-        create_table(con)
-        if not con:
-            os.system('touch '+'./db/'+name+'.db')
+        if not os.path.isfile("./db/" + name + ".db"):
+            os.system('touch ' + './db/' + name + '.db')
             con = sqlite3.connect('./db/'+name+'.db')
             create_table(con)
+        else:
+            con = sqlite3.connect('./db/'+name+'.db')
+            # create_table(con)
         return con
     except Error:
         print(Error)
@@ -80,12 +81,19 @@ def connection(name=''):
 def connection_dokyo(name=''):
     try:
         print("try로 들어옴??")
-        con = sqlite3.connect('./db_dokyo/'+name+'.db')
-        create_table(con)
-        if not con:
-            os.system('touch '+'./db_dokyo/'+name+'.db')
+        if not os.path.isfile("./db_dokyo/" + name + ".db"):
+            os.system('touch ' + './db_dokyo/' + name + '.db')
             con = sqlite3.connect('./db_dokyo/'+name+'.db')
             create_table(con)
+        else:
+            con = sqlite3.connect('./db_dokyo/'+name+'.db')
+            # create_table(con)
+        # con = sqlite3.connect('./db_dokyo/'+name+'.db')
+        # create_table(con)
+        # if not con:
+        #     os.system('touch '+'./db_dokyo/'+name+'.db')
+        #     con = sqlite3.connect('./db_dokyo/'+name+'.db')
+        #     create_table(con)
         return con
     except Error:
         print(Error)
