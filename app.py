@@ -140,7 +140,7 @@ def generate_again():
         name = param.json().get('email')
         TS_list = Thompson_Sampling(name, '', reco=1, total_Osakak_df="./total_Dokyo.csv",city='도쿄',user_df_path="./member_info_dokyo/" + param.json().get('email') + ".csv")
         result_2 = make_att_list_by_TS(TS_list, path="./total_Dokyo.csv.csv",user_df_path="./member_info_dokyo/"+name+".csv", city=param.json().get('city'), name=param.json().get('email'))
-        result_3 = attraction_route_recommend(result_2, start_time, end_time, './Tokyo_time.csv', './User_df.csv',
+        result_3 = attraction_route_recommend(result_2, start_time, end_time, './Tokyo_time.csv', './User_df_Dokyo.csv',
                                               './total_Dokyo.csv', param.json().get('travel_start'), param.json().get('travel_end'),param.json().get('city'))
         response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
         return response.text
@@ -211,7 +211,7 @@ def togo():
         result_3=attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.get('travel_start'),param.get('travel_end'),param.get('city'),param.get('email'))
     else:
         result_2 = choose_attraction(result_1, './total_Dokyo.csv','도쿄',name)
-        result_3 = attraction_route_recommend(result_2, start_time, end_time, './Tokyo_time.csv', './User_df.csv',
+        result_3 = attraction_route_recommend(result_2, start_time, end_time, './Tokyo_time.csv', './User_df_Dokyo.csv',
                                               './total_Dokyo.csv', param.get('travel_start'), param.get('travel_end'),param.get('city'),param.get('email'))
     print(result_1)
     print(result_2)
