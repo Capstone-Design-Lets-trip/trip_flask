@@ -96,7 +96,7 @@ def update_scrap_csv():
         re_box = Thompson_Sampling(name, attraction, reco=0, total_Osakak_df="./total_Dokyo.csv")
         return "Good"
 
-@app.route('/test_re_final', methods=['GET'])
+@app.route('/test_re_final', methods=['POST'])
 def generate_again():
     format = '%Y-%m-%d %H:%M:%S'
     #원래 이렇게 받으려 했어요
@@ -198,10 +198,10 @@ def togo():
     end_time=datetime.datetime.strptime(param.get('endDate').replace('T',' '),format)
     result_1=att_recommend(input_keyword = str(dup))
     if param['city']=='오사카':
-        result_2=choose_attraction(result_1,'./total_Osaka.csv',param.get('city'),param.get('name'))
+        result_2=choose_attraction(result_1,'./total_Osaka.csv','오사카',name)
         result_3=attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.get('travel_start'),param.get('travel_end'))
     else:
-        result_2 = choose_attraction(result_1, './total_Dokyo.csv',param.get('city'),param.get('name'))
+        result_2 = choose_attraction(result_1, './total_Dokyo.csv','도쿄',name)
         result_3 = attraction_route_recommend(result_2, start_time, end_time, './Tokyo_time.csv', './User_df.csv',
                                               './total_Dokyo.csv', param.get('travel_start'), param.get('travel_end'))
     print(result_1)
