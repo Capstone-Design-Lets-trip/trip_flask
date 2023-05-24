@@ -155,7 +155,7 @@ def togo():
             os.system("sudo cp User_df.csv ./member_info/" + name + ".csv")
     if param['city']=='도쿄':
         if not os.path.isfile("./member_info_dokyo/"+name+".csv"):
-            os.system("sudo cp User_df.csv ./member_info_dokyo/" + name + ".csv")
+            os.system("sudo cp User_df_Dokyo.csv ./member_info_dokyo/" + name + ".csv")
 
     keys=list(param.keys())
     format = '%Y-%m-%d %H:%M'
