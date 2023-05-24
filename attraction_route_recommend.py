@@ -542,5 +542,5 @@ def attraction_route_recommend(input='', input_time='', finish_times='', Osaka_t
         input_time += dt.timedelta(days=1)
         input_time = input_time.replace(hour=int(go_out_time[:2]), minute=int(go_out_time[-2:]))
         attrList = []
-
+#gd
     return empty_list
