@@ -42,13 +42,13 @@ def make_att_list_by_TS(TS_list='', path='', user_df_path='',city='',name=''):
   print(score_box)
   score = 15
   for item in TS_list:
-    print(item)
-    print(item[0])
-    print(score_box[item[0]])
-    print(type(score_box[item[0]]))
-    print(type(item))
-    print(type(item[0]))
-    score_box[item[0]] += score
+    # print(item)
+    # print(item[0])
+    # print(score_box[item[0]])
+    # print(type(score_box[item[0]]))
+    # print(type(item))
+    # print(type(item[0]))
+    score_box[item] += score
     score -= 1
 
   for i in range(end):
