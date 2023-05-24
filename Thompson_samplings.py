@@ -169,6 +169,7 @@ def Thompson_Sampling(user_id = '', click_item = '', reco = '', total_Osakak_df 
     print("여기들어옴?")
     print("여기들어옴?")
     print(user_id)
+    print(city)
     if city=='오사카':
         con = connection(user_id)
     else:
