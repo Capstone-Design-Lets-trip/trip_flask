@@ -13,10 +13,14 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 import json
 
-def att_recommend(path  = '', input_keyword=''):
+def att_recommend(path  = '', input_keyword='', city = ''):
   final_data = pd.read_csv(path)
 
-  label = ['간사이 공항', '오사카 국제공항']
+  if city == '오사카':
+    label = ['간사이 공항', '오사카 국제공항']
+  elif city == '도쿄':
+    label = ['하네다국제공항']
+
   index = []
 
   for i in label:
