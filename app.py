@@ -99,7 +99,7 @@ def update_scrap_csv():
 @app.route('/test_re_final', methods=['GET'])
 def generate_again():
     #원래 이렇게 받으려 했어요
-    param_1 = requests.get_json()
+    param_1 = request.get_json()
 
     #이렇게 고칠게요
     city = param_1.get('city')
