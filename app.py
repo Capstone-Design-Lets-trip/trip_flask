@@ -1,3 +1,5 @@
+import json
+
 import requests
 from att_recommend import *
 from choose_attraction import *
@@ -18,6 +20,39 @@ sorted_total_clustering=''
 
 app = Flask(__name__)
 CORS(app)  # 모든 origin에 대해 CORS를 허용합니다.
+
+@app.route('/to_test_see',methods=['POST'])
+def to_see():
+    param = request.get_json()
+    print(param)
+    # print(type(param))
+    # print(type(json.loads(param)))
+    # # print(type(jsonify(param)))
+    return 'json.loads(param)'
+
+@app.route('/to_test',methods=['POST'])
+def to_test():
+    # 원래 이렇게 받으려 했어요
+    param = request.get_json()
+    headers = {'Content-Type': 'application/json'}
+    #
+    city = param['city']
+    email = param['email']
+
+    # JSON 데이터 생성
+    data = {
+        "city": city,
+        "email": email
+    }
+    print(data)
+    print(type(data))
+    print(json.dumps(data))
+    print(type(json.dumps(data)))
+    # return (json.dumps(data))
+    param_2 = requests.post('http://127.0.0.1:5000/to_test_see', data=json.dumps(data), headers=headers)
+    print(param_2)
+    return 'good'
+
 
 @app.route('/to_update',methods=['POST'])
 def update_csv():
@@ -61,9 +96,22 @@ def update_scrap_csv():
         re_box = Thompson_Sampling(name, attraction, reco=0, total_Osakak_df="./total_Dokyo.csv")
         return "Good"
 
-@app.route('/togo_re', methods=['POST'])
+@app.route('/test_re_final', methods=['GET'])
 def generate_again():
-    param = request.get_json()
+    #원래 이렇게 받으려 했어요
+    param_1 = request.get_json()
+
+    #이렇게 고칠게요
+    city = param_1['city']
+    email = param_1['email']
+    # JSON 데이터 생성
+    data = {
+        "city": city,
+        "email": email
+    }
+    param = requests.get('/survey/all',data=json.dumps(data))
+    print('-------------togo_re_param----------')
+    print(param)
     global sorted_total_clustering
 
     if param['city']=='오사카':
@@ -73,6 +121,8 @@ def generate_again():
         TS_list = Thompson_Sampling('', '', reco=1, total_Osakak_df="./total_Osaka.csv")
         result_2 = make_att_list_by_TS(sorted_total_clustering, TS_list, path="./total_Osaka.csv")
         result_3 = attraction_route_recommend(result_2, start_time, end_time, './Osaka_time.csv','./User_df.csv','./total_Osaka.csv',param.get('travel_start'),param.get('travel_end'))
+        response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
+        return response.text
     else:
         start_time = datetime.datetime.strptime(param.get('startDate').replace('T', ' '), format)
         end_time = datetime.datetime.strptime(param.get('endDate').replace('T', ' '), format)
@@ -81,6 +131,8 @@ def generate_again():
         result_2 = make_att_list_by_TS(sorted_total_clustering, TS_list, path="./total_Dokyo.csv.csv")
         result_3 = attraction_route_recommend(result_2, start_time, end_time, './Tokyo_time.csv', './User_df.csv',
                                               './total_Dokyo.csv', param.get('travel_start'), param.get('travel_end'))
+        response = requests.get("http://letstrip.shop:8080/tour/course", json=result_3)
+        return response.text
 
 
 
@@ -88,6 +140,7 @@ def generate_again():
 def togo():
     to_return=[]
     param = request.get_json()
+    return param
     print(param)
     name=param.get('email')
     con = connection(name)
