@@ -113,6 +113,6 @@ def choose_attraction(input = '', path = '', city='', user=''):
   print('./clustering_'+city+'/'+user+'_sorted'+'.csv')
   print(city)
   print(user)
-  box.to_csv('./clustering_'+city+'/'+user+'_sorted'+'.csv')
+  box.to_csv('./clustering_'+city+'/'+user+'_sorted'+'.csv',index=False)
 
   return final_att_list
