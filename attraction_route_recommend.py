@@ -15,6 +15,7 @@ import datetime as dt
 from datetime import datetime
 from copy import deepcopy
 
+pd.set_option('mode.chained_assignment',  None)
 
 def find_index(dataframe, Name):
     return dataframe[dataframe.Name == Name].index[0]
@@ -450,6 +451,7 @@ def attraction_route_recommend(input='', input_time='', finish_times='', Osaka_t
     buf_cnt = 0
 
     for day in range(1, total_travel_days):
+        print(day)
         travel_time = 0
         allocationTime = ((input_time.replace(hour=int(go_in_time[:2]), minute=int(go_in_time[-2:])) - input_time) / 60).seconds
         move_time = 30
