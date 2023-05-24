@@ -102,14 +102,14 @@ def generate_again():
     param_1 = requests.get_json()
 
     #이렇게 고칠게요
-    city = param_1['city']
-    email = param_1['email']
+    city = param_1.get('city')
+    email = param_1.get('email')
     # JSON 데이터 생성
     data = {
         "city": city,
         "email": email
     }
-    param = requests.get('/survey/all',data=json.dumps(data))
+    param = request.get('/survey/all',data=json.dumps(data))
     print('-------------togo_re_param----------')
     print(param)
     global sorted_total_clustering
