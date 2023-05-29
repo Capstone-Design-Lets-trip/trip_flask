@@ -11,6 +11,7 @@ Original file is located at
 import numpy as np
 import pandas as pd
 import pickle
+import time
 import sqlite3
 from sqlite3 import Error
 import pickle
@@ -83,17 +84,11 @@ def connection_dokyo(name=''):
         print("try로 들어옴??")
         if not os.path.isfile("./db_dokyo/" + name + ".db"):
             os.system('touch ' + './db_dokyo/' + name + '.db')
+            time.sleep(1)  # 1초 대기
             con = sqlite3.connect('./db_dokyo/'+name+'.db')
             create_table(con)
         else:
             con = sqlite3.connect('./db_dokyo/'+name+'.db')
-            # create_table(con)
-        # con = sqlite3.connect('./db_dokyo/'+name+'.db')
-        # create_table(con)
-        # if not con:
-        #     os.system('touch '+'./db_dokyo/'+name+'.db')
-        #     con = sqlite3.connect('./db_dokyo/'+name+'.db')
-        #     create_table(con)
         return con
     except Error:
         print(Error)
